@@ -3,7 +3,7 @@ package idv.po.mtk_src.movie.domain.query.controller;
 
 import idv.po.mtk_src.movie.domain.query.readmodel.MovieInfo;
 import idv.po.mtk_src.movie.domain.query.readmodel.MovieReadModel;
-import idv.po.mtk_src.movie.domain.query.service.MovieQueryService;
+import idv.po.mtk_src.movie.domain.query.service.MovieReadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/query")
 public class MovieQueryController {
     @Autowired
-    private MovieQueryService queryService;
+    private MovieReadService queryService;
 
     @GetMapping("/movieInfo")
     public ResponseEntity<MovieInfo> queryMovie(@RequestBody MovieReadModel query){

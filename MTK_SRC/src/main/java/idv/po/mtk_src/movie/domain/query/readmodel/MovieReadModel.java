@@ -6,6 +6,7 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -63,7 +64,7 @@ public class MovieReadModel {
     private LocalDateTime updateTime;
 
     @Field(type = FieldType.Nested)
-    private List<Showtime> showtimes;
+    private List<Showtime> showtime;
 
     @Data
     @AllArgsConstructor
@@ -82,7 +83,7 @@ public class MovieReadModel {
         private int seatsAvailable;
 
         @Field(type = FieldType.Float)
-        private float price;
+        private BigDecimal price;
     }
 }
 
