@@ -1,11 +1,14 @@
 package idv.po.mtk_src.movie.domain.query.repositary;
 
 import idv.po.mtk_src.movie.domain.query.readmodel.MovieReadModel;
+import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
+import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
 import java.util.List;
 
-public interface MovieReadRepository {
+@Repository
+public interface MovieReadRepository  {
 
     /*
      * @param keyword

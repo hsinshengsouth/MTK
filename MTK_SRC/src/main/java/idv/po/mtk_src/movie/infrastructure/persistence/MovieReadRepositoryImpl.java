@@ -8,19 +8,26 @@ import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class  MovieReadRepositoryImpl implements MovieReadRepository {
+public class MovieReadRepositoryImpl implements MovieReadRepository {
+
+
+    private static final Logger logger = LoggerFactory.getLogger(MovieReadRepositoryImpl.class);
+
 
     private final RestHighLevelClient client;
 
 
     public MovieReadRepositoryImpl(RestHighLevelClient client) {
         this.client = client;
+        logger.info("Elasticsearch Connected: {}", client);
     }
 
 
@@ -50,9 +57,6 @@ public class  MovieReadRepositoryImpl implements MovieReadRepository {
     }
 
 
-
-
-
     private List<MovieReadModel> searchByField(String field, String value) throws IOException {
         SearchRequest searchRequest = new SearchRequest("movie");
         SearchSourceBuilder sourceBuilder = new SearchSourceBuilder()
@@ -72,7 +76,7 @@ public class  MovieReadRepositoryImpl implements MovieReadRepository {
                         .chMovieName((String) hit.getSourceAsMap().get("chMovieName"))
                         .description((String) hit.getSourceAsMap().get("description"))
                         .genres((List<String>) hit.getSourceAsMap().get("genres"))
-                        .actors((List<String>)hit.getSourceAsMap().get("actors"))
+                        .actors((List<String>) hit.getSourceAsMap().get("actors"))
                         .rating(((Number) hit.getSourceAsMap().get("rating")).floatValue())
                         .runtimeMinutes((Integer) hit.getSourceAsMap().get("runtimeMinutes"))
                         .posterUrl((String) hit.getSourceAsMap().get("posterUrl"))
@@ -81,9 +85,6 @@ public class  MovieReadRepositoryImpl implements MovieReadRepository {
         ));
         return movies;
     }
-
-
-
 
 
 }

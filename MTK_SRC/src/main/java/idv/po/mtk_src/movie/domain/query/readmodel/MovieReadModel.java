@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class MovieReadModel {
+public class MovieReadModel  extends  MovieInfo{
     @Id
     private String   movieID;
 
