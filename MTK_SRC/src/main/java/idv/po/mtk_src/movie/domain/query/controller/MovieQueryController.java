@@ -13,29 +13,29 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/query")
+@RequestMapping("/movies/query")
 @RequiredArgsConstructor
 public class MovieQueryController {
 
     private final MovieReadService readService;
 
-    @GetMapping("/movieInfo/{chMovieName}")
-    public ResponseEntity<List<? extends MovieInfo>> queryMovieByChName(@PathVariable("chMovieName") String chMovieName) throws IOException {
+    @GetMapping("/ch/{name}")
+    public ResponseEntity<List<? extends MovieInfo>> queryMovieByChName(@PathVariable("name") String chMovieName) throws IOException {
         return resultBack(readService.findByChMovieName(chMovieName));
     }
 
-    @GetMapping("/movieInfo/{enMovieName}")
-    public ResponseEntity<List<? extends MovieInfo>> queryMovieByEnName(@PathVariable("enMovieName") String enMovieName) throws IOException {
-        return resultBack(readService.findByEnMovieName(enMovieName));
+    @GetMapping("/en/{name}")
+    public ResponseEntity<List<? extends MovieInfo>> queryMovieByEnName(@PathVariable("name") String enMovieName) throws IOException {
+         return resultBack(readService.findByEnMovieName(enMovieName));
     }
 
-    @GetMapping("/movieInfo//{description}")
-    public ResponseEntity<List<? extends MovieInfo>> queryMovieByDesc(@PathVariable("description") String description) throws IOException {
+    @GetMapping("/description")
+    public ResponseEntity<List<? extends MovieInfo>> queryMovieByDesc(@RequestParam String description) throws IOException {
         return resultBack(readService.findByDescriptionContaining(description));
     }
 
-    @GetMapping("/movieInfo/{keyword}")
-    public ResponseEntity<List<? extends MovieInfo>> queryMovieByKeyword(@PathVariable("keyword") String keyword) throws IOException {
+    @GetMapping("/keyword")
+    public ResponseEntity<List<? extends MovieInfo>> queryMovieByKeyword(@RequestParam String keyword)  throws IOException {
         return resultBack(readService.searchMovies(keyword));
     }
 

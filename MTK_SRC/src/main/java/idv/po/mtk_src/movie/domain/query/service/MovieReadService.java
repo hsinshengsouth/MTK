@@ -2,8 +2,7 @@ package idv.po.mtk_src.movie.domain.query.service;
 
 import idv.po.mtk_src.movie.domain.query.readmodel.MovieInfo;
 import idv.po.mtk_src.movie.domain.query.readmodel.MovieReadModel;
-import idv.po.mtk_src.movie.domain.query.repositary.MovieReadRepository;
-import lombok.RequiredArgsConstructor;
+import idv.po.mtk_src.movie.domain.query.repository.MovieReadRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +14,15 @@ import java.util.List;
 
 @Service
 @Component
-@RequiredArgsConstructor
 public class MovieReadService {
 
     private final MovieReadRepository movieReadRepository;
+
+
+    public MovieReadService(MovieReadRepository movieReadRepository) {
+        this.movieReadRepository = movieReadRepository;
+    }
+
 
     public List<MovieReadModel> findByEnMovieName(String enMovieName) throws IOException {
         return movieReadRepository.findByEnMovieName(enMovieName);
