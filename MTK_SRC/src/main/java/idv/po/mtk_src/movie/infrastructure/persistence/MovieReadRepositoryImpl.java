@@ -30,7 +30,7 @@ public class MovieReadRepositoryImpl implements MovieReadRepository {
 
 
     private static final Logger logger = LoggerFactory.getLogger(MovieReadRepositoryImpl.class);
-    private static final String index="movie";
+    private static final String index = "movie";
 
     private final RestHighLevelClient client;
 
@@ -38,24 +38,24 @@ public class MovieReadRepositoryImpl implements MovieReadRepository {
     private final SearchSourceBuilder sourceBuilder;
 
 
-    public MovieReadRepositoryImpl(@Qualifier("customElasticsearchClient")RestHighLevelClient client) {
+    public MovieReadRepositoryImpl(@Qualifier("customElasticsearchClient") RestHighLevelClient client) {
         this.client = client;
-        this.searchRequest=new SearchRequest(index);
-        this.sourceBuilder=new SearchSourceBuilder();
+        this.searchRequest = new SearchRequest(index);
+        this.sourceBuilder = new SearchSourceBuilder();
         logger.info("Elasticsearch Connected: {}", client);
     }
 
 
     @Override
     public List<MovieReadModel> searchMovies(String keyword) throws IOException {
-        sourceBuilder .query(QueryBuilders.multiMatchQuery(keyword, "enMovieName", "chMovieName", "description"));
+        sourceBuilder.query(QueryBuilders.multiMatchQuery(keyword, "enMovieName", "chMovieName", "description"));
         searchRequest.source(sourceBuilder);
         return executeSearch(searchRequest);
     }
 
     @Override
     public List<MovieReadModel> findByEnMovieName(String enMovieName) throws IOException {
-        return multiMatchQuery( enMovieName, "movie_name.enMovieName");
+        return multiMatchQuery(enMovieName, "movie_name.enMovieName");
     }
 
     @Override
@@ -65,11 +65,11 @@ public class MovieReadRepositoryImpl implements MovieReadRepository {
 
     @Override
     public List<MovieReadModel> findByDescriptionContaining(String description) throws IOException {
-        return searchByField( "description", description);
+        return searchByField("description", description);
     }
 
 
-    private  List<MovieReadModel> multiMatchQuery( String value, String field) throws IOException {
+    private List<MovieReadModel> multiMatchQuery(String value, String field) throws IOException {
         SearchRequest searchRequest = new SearchRequest(index);
         SearchSourceBuilder sourceBuilder = new SearchSourceBuilder()
                 .query(QueryBuilders.multiMatchQuery(value, field));
@@ -78,8 +78,7 @@ public class MovieReadRepositoryImpl implements MovieReadRepository {
     }
 
 
-
-    private  List<MovieReadModel> searchByField( String field, String value) throws IOException {
+    private List<MovieReadModel> searchByField(String field, String value) throws IOException {
         SearchRequest searchRequest = new SearchRequest(index);
         SearchSourceBuilder sourceBuilder = new SearchSourceBuilder()
                 .query(QueryBuilders.matchQuery(field, value));
@@ -88,13 +87,12 @@ public class MovieReadRepositoryImpl implements MovieReadRepository {
     }
 
 
-
     private List<MovieReadModel> executeSearch(SearchRequest searchRequest) throws IOException {
         List<MovieReadModel> movies = new ArrayList<>();
-         SearchResponse response = client.search(searchRequest, RequestOptions.DEFAULT);
+        SearchResponse response = client.search(searchRequest, RequestOptions.DEFAULT);
 
-        response.getHits().forEach(hit-> {
-            MovieReadModel movie= objectMapper().convertValue(hit.getSourceAsMap(), MovieReadModel.class);
+        response.getHits().forEach(hit -> {
+            MovieReadModel movie = objectMapper().convertValue(hit.getSourceAsMap(), MovieReadModel.class);
             movie.setMovieID(hit.getId());
             movies.add(movie);
         });
@@ -103,7 +101,7 @@ public class MovieReadRepositoryImpl implements MovieReadRepository {
     }
 
 
-    private ObjectMapper objectMapper(){
+    private ObjectMapper objectMapper() {
         return new ObjectMapper().registerModule(new JavaTimeModule()).disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     }
 
