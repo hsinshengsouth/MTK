@@ -1,0 +1,40 @@
+package idv.po.mtk_src.management.domain.user;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+
+@Service
+public class ManageUserService {
+
+    private final ManageUserRepository userRepository;
+
+    @Autowired
+    public ManageUserService(ManageUserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    public Optional<ManageUser> getUserByEmail(String email) {
+        return userRepository.findByUserEmail(email);
+    }
+
+    public Optional<ManageUser> getUserById(Integer userId) {
+        return userRepository.findByUserId(userId);
+    }
+
+    public Optional<ManageUser> getUserByName(String  userName) {
+        return userRepository.findByUserName(userName);
+    }
+
+    public ManageUser saveManageUser(ManageUser user){
+        return userRepository.save(user);
+    }
+
+    public ManageUser updateManageUser(ManageUser user){
+        return userRepository.update(user);
+    }
+
+
+
+}

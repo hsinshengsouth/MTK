@@ -1,5 +1,6 @@
-package idv.po.mtk_src.management.domain.model;
+package idv.po.mtk_src.management.domain.user;
 
+import idv.po.mtk_src.management.domain.entity.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

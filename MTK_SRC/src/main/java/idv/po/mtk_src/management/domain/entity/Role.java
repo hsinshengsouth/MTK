@@ -1,4 +1,4 @@
-package idv.po.mtk_src.management.domain.model;
+package idv.po.mtk_src.management.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
