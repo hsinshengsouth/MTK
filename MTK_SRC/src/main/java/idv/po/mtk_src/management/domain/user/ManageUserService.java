@@ -1,6 +1,8 @@
 package idv.po.mtk_src.management.domain.user;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -10,13 +12,13 @@ public class ManageUserService {
 
     private final ManageUserRepository userRepository;
 
-    @Autowired
-    public ManageUserService(ManageUserRepository userRepository) {
-        this.userRepository = userRepository;
+    public ManageUserService(
+            @Qualifier("jpaManageUserRepository") ManageUserRepository manageUserRepository
+    ) {
+        this.userRepository = manageUserRepository;
     }
-
     public Optional<ManageUser> getUserByEmail(String email) {
-        return userRepository.findByUserEmail(email);
+         return userRepository.findByUserEmail(email);
     }
 
     public Optional<ManageUser> getUserById(Integer userId) {
@@ -27,12 +29,8 @@ public class ManageUserService {
         return userRepository.findByUserName(userName);
     }
 
-    public ManageUser saveManageUser(ManageUser user){
+    public ManageUser saveManageUser(ManageUser user) {
         return userRepository.save(user);
-    }
-
-    public ManageUser updateManageUser(ManageUser user){
-        return userRepository.update(user);
     }
 
 

@@ -1,17 +1,15 @@
-package idv.po.mtk_src.movie.infrastructure.persistence;
+package idv.po.mtk_src.infrastructure.repository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import idv.po.mtk_src.movie.domain.query.readmodel.MovieReadModel;
-import idv.po.mtk_src.movie.domain.query.repository.MovieReadRepository;
+import idv.po.mtk_src.movie.domain.query.MovieReadModel;
+import idv.po.mtk_src.movie.domain.query.MovieReadRepository;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.search.SearchHit;
-import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,16 +18,14 @@ import org.springframework.stereotype.Repository;
 
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Repository
-public class MovieReadRepositoryImpl implements MovieReadRepository {
+public class ElasticsearchClientMovieReadRepository implements MovieReadRepository {
 
 
-    private static final Logger logger = LoggerFactory.getLogger(MovieReadRepositoryImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(ElasticsearchClientMovieReadRepository.class);
     private static final String index = "movie";
 
     private final RestHighLevelClient client;
@@ -38,7 +34,7 @@ public class MovieReadRepositoryImpl implements MovieReadRepository {
     private final SearchSourceBuilder sourceBuilder;
 
 
-    public MovieReadRepositoryImpl(@Qualifier("customElasticsearchClient") RestHighLevelClient client) {
+    public ElasticsearchClientMovieReadRepository(@Qualifier("customElasticsearchClient") RestHighLevelClient client) {
         this.client = client;
         this.searchRequest = new SearchRequest(index);
         this.sourceBuilder = new SearchSourceBuilder();

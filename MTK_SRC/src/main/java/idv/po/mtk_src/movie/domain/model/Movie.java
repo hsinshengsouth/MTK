@@ -1,8 +1,5 @@
 package idv.po.mtk_src.movie.domain.model;
 
-import idv.po.mtk_src.movie.domain.valueobject.Actor;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;

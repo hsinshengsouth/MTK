@@ -1,6 +1,5 @@
 package idv.po.mtk_src.management.domain.user;
 
-import idv.po.mtk_src.management.domain.entity.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,7 +30,7 @@ public class ManageUser implements UserDetails {
     private String userStatus;
     private Integer deptId;
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "UserRole",
+    @JoinTable(name = "ManageUserRole",
             joinColumns = @JoinColumn(name = "userid"),
             inverseJoinColumns = @JoinColumn(name = "roleId"))
     private Set<Role> roles;

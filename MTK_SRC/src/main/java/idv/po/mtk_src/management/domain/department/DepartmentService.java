@@ -1,6 +1,7 @@
 package idv.po.mtk_src.management.domain.department;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,7 +13,9 @@ public class DepartmentService {
     private final DepartmentRepository deptRepository;
 
     @Autowired
-    public DepartmentService(DepartmentRepository deptRepository) {
+    public DepartmentService(
+            @Qualifier("jpaDepartmentRepository")DepartmentRepository deptRepository
+    ) {
         this.deptRepository = deptRepository;
     }
 
@@ -27,10 +30,6 @@ public class DepartmentService {
 
     public void saveDept(Department dept){
         deptRepository.save(dept);
-    }
-
-    public void updateDept(Department dept){
-        deptRepository.update(dept);
     }
 
 

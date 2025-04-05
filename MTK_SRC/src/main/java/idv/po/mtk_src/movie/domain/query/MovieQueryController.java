@@ -1,8 +1,6 @@
-package idv.po.mtk_src.movie.domain.query.controller;
+package idv.po.mtk_src.movie.domain.query;
 
 
-import idv.po.mtk_src.movie.domain.query.readmodel.MovieInfo;
-import idv.po.mtk_src.movie.domain.query.service.MovieReadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

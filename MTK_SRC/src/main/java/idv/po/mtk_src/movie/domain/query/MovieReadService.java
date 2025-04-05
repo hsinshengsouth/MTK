@@ -1,8 +1,5 @@
-package idv.po.mtk_src.movie.domain.query.service;
+package idv.po.mtk_src.movie.domain.query;
 
-import idv.po.mtk_src.movie.domain.query.readmodel.MovieInfo;
-import idv.po.mtk_src.movie.domain.query.readmodel.MovieReadModel;
-import idv.po.mtk_src.movie.domain.query.repository.MovieReadRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 

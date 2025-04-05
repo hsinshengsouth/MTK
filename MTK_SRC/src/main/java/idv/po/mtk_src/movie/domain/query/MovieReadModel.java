@@ -1,4 +1,4 @@
-package idv.po.mtk_src.movie.domain.query.readmodel;
+package idv.po.mtk_src.movie.domain.query;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;

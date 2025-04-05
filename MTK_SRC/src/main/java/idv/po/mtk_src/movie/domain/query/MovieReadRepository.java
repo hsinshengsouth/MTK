@@ -1,6 +1,5 @@
-package idv.po.mtk_src.movie.domain.query.repository;
+package idv.po.mtk_src.movie.domain.query;
 
-import idv.po.mtk_src.movie.domain.query.readmodel.MovieReadModel;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;

@@ -7,6 +7,7 @@ public interface ManageUserRepository {
     Optional<ManageUser> findByUserEmail(String userEmail);
     Optional<ManageUser> findByUserId(Integer userId);
     ManageUser save(ManageUser user);
-    ManageUser update(ManageUser user);
+    Integer updateStatus(String  userId, String  userStatus);
+
 
 }
