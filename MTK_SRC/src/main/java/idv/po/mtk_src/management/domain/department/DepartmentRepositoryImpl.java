@@ -1,6 +1,6 @@
 package idv.po.mtk_src.management.domain.department;
 
-import idv.po.mtk_src.infrastructure.repository.SpringDataJpaDepartmentRepository;
+import idv.po.mtk_src.infrastructure.repository.DepartmentJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,9 +11,9 @@ import java.util.Optional;
 @Repository
 @Transactional
 @RequiredArgsConstructor
-public class JpaDepartmentRepository implements DepartmentRepository{
+public class DepartmentRepositoryImpl implements DepartmentRepository{
 
-    private final SpringDataJpaDepartmentRepository departmentRepo;
+    private final DepartmentJpaRepository departmentRepo;
 
     @Override
     public List<Department> findAll() {

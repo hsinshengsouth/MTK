@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "ManageUser")
+@Table(name = "users")
 @Entity
 public class ManageUser implements UserDetails {
 
@@ -30,9 +30,9 @@ public class ManageUser implements UserDetails {
     private String userStatus;
     private Integer deptId;
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "ManageUserRole",
-            joinColumns = @JoinColumn(name = "userid"),
-            inverseJoinColumns = @JoinColumn(name = "roleId"))
+    @JoinTable(name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
 
@@ -71,6 +71,6 @@ public class ManageUser implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return  userStatus.equals("active");
+        return  "ACTIVE".equalsIgnoreCase(this.userStatus);
     }
 }

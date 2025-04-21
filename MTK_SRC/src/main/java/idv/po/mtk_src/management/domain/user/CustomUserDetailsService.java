@@ -1,7 +1,5 @@
 package idv.po.mtk_src.management.domain.user;
 
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,7 +13,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 
     public CustomUserDetailsService(
-            @Qualifier("jpaManageUserRepository") ManageUserRepository manageUserRepository
+            @Qualifier("manageUserRepositoryImpl") ManageUserRepository manageUserRepository
     ) {
         this.repository = manageUserRepository;
     }

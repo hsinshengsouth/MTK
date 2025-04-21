@@ -14,7 +14,7 @@ public class DepartmentService {
 
     @Autowired
     public DepartmentService(
-            @Qualifier("jpaDepartmentRepository")DepartmentRepository deptRepository
+            @Qualifier("departmentRepositoryImpl")DepartmentRepository deptRepository
     ) {
         this.deptRepository = deptRepository;
     }

@@ -1,7 +1,5 @@
 package idv.po.mtk_src.management.domain.user;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +11,7 @@ public class ManageUserService {
     private final ManageUserRepository userRepository;
 
     public ManageUserService(
-            @Qualifier("jpaManageUserRepository") ManageUserRepository manageUserRepository
+            @Qualifier("manageUserRepositoryImpl") ManageUserRepository manageUserRepository
     ) {
         this.userRepository = manageUserRepository;
     }

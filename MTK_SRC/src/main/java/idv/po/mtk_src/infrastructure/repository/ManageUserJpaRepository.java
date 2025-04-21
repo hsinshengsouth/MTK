@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 @EnableJpaRepositories
-public interface SpringDataJpaManageUserRepository extends JpaRepository<ManageUser, Integer>, ManageUserRepository {
+public interface ManageUserJpaRepository extends JpaRepository<ManageUser, Integer>, ManageUserRepository {
 
     Optional<ManageUser> findByUserName(String username);
 

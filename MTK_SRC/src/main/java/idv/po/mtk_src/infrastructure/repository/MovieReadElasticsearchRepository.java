@@ -22,10 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class ElasticsearchClientMovieReadRepository implements MovieReadRepository {
+public class MovieReadElasticsearchRepository implements MovieReadRepository {
 
 
-    private static final Logger logger = LoggerFactory.getLogger(ElasticsearchClientMovieReadRepository.class);
+    private static final Logger logger = LoggerFactory.getLogger(MovieReadElasticsearchRepository.class);
     private static final String index = "movie";
 
     private final RestHighLevelClient client;
@@ -34,7 +34,7 @@ public class ElasticsearchClientMovieReadRepository implements MovieReadReposito
     private final SearchSourceBuilder sourceBuilder;
 
 
-    public ElasticsearchClientMovieReadRepository(@Qualifier("customElasticsearchClient") RestHighLevelClient client) {
+    public MovieReadElasticsearchRepository(@Qualifier("customElasticsearchClient") RestHighLevelClient client) {
         this.client = client;
         this.searchRequest = new SearchRequest(index);
         this.sourceBuilder = new SearchSourceBuilder();

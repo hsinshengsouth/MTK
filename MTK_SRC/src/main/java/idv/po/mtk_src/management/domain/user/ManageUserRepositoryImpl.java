@@ -1,6 +1,6 @@
 package idv.po.mtk_src.management.domain.user;
 
-import idv.po.mtk_src.infrastructure.repository.SpringDataJpaManageUserRepository;
+import idv.po.mtk_src.infrastructure.repository.ManageUserJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,9 +10,9 @@ import java.util.Optional;
 @Repository
 @Transactional
 @RequiredArgsConstructor
-public class JpaManageUserRepository  implements  ManageUserRepository{
+public class ManageUserRepositoryImpl implements  ManageUserRepository{
 
-    private final SpringDataJpaManageUserRepository manageUserRepo;
+    private final ManageUserJpaRepository manageUserRepo;
 
 
     @Override

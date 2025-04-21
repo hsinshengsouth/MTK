@@ -1,0 +1,22 @@
+package idv.po.mtk_src.movie.domain.command.repoimpl;
+
+import idv.po.mtk_src.infrastructure.repository.ShowtimeJpaRepository;
+import idv.po.mtk_src.movie.domain.command.ShowtimeRepository;
+import idv.po.mtk_src.movie.domain.model.ShowTime;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+@RequiredArgsConstructor
+public class ShowtimeRepositoryImpl implements ShowtimeRepository {
+
+    private final ShowtimeJpaRepository showtimeJpaRepository;
+
+
+    @Override
+    public void saveAll(List<ShowTime> showTimes) {
+        showtimeJpaRepository.saveAll(showTimes);
+    }
+}

@@ -1,4 +1,4 @@
-package idv.po.mtk_src.booking.domain.model;
+package idv.po.mtk_src.management.domain.domain.model;
 
 import java.math.BigDecimal;
 import java.util.Date;

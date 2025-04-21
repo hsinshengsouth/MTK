@@ -19,11 +19,20 @@ import java.util.function.Function;
 public class JwtUtils {
 
     @Value("${application.security.jwt.secret-key}")
-    private static   String SECRET_KEY ;
+    private   String SECRET_KEY ;
 
     @Value("${application.security.jwt.expiration-time}")
-    private static  long jwtExpirationMs ;
+    private  long jwtExpirationMs ;
 
+
+    public String getSecretKey() {
+        return SECRET_KEY;
+    }
+
+
+    public Long getExpirationMs() {
+        return jwtExpirationMs;
+    }
 
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
@@ -31,7 +40,7 @@ public class JwtUtils {
                 .setClaims(claims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
+                .setExpiration(new Date(System.currentTimeMillis() +  getExpirationMs()))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -60,7 +69,7 @@ public class JwtUtils {
 
 
     private Key getSignInKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
+        byte[] keyBytes = Decoders.BASE64.decode(getSecretKey());
         return Keys.hmacShaKeyFor(keyBytes);
     }
 

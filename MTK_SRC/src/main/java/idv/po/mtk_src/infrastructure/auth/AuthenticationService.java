@@ -4,6 +4,7 @@ import idv.po.mtk_src.infrastructure.AuthUtils.JwtUtils;
 import idv.po.mtk_src.management.domain.user.ManageUser;
 import idv.po.mtk_src.management.domain.user.ManageUserRepository;
 import idv.po.mtk_src.management.domain.user.Role;
+import idv.po.mtk_src.management.domain.user.RoleRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,28 +24,32 @@ public class AuthenticationService {
     private final JwtUtils jwtUtils;
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
-
+    
+    private final RoleRepository roleRepository;
     public AuthenticationService(
-            @Qualifier("springDataJpaManageUserRepository") ManageUserRepository manageUserRepository,
+            @Qualifier("manageUserJpaRepository") ManageUserRepository manageUserRepository,
             JwtUtils jwtUtils,
             AuthenticationManager authenticationManager,
-            PasswordEncoder passwordEncoder
-    ) {
+            PasswordEncoder passwordEncoder,
+            @Qualifier("roleJpaRepository") RoleRepository roleRepository) {
         this.manageUserRepository = manageUserRepository;
         this.jwtUtils=jwtUtils;
         this.authenticationManager=authenticationManager;
         this.passwordEncoder=passwordEncoder;
+        this.roleRepository = roleRepository;
     }
 
 
     @Transactional
     public AuthenticationResponse register(RegisterRequest request) {
         ManageUser registerUser = new ManageUser();
-        BeanUtils.copyProperties(request, registerUser, "role","password");
+        BeanUtils.copyProperties(request, registerUser, "password");
 
-        if (request.getRole() != null) {
+        if (request.getRoleId() != null) {
+            Role role = roleRepository.findByRoleId(request.getRoleId() )
+                    .orElseThrow(() -> new RuntimeException("Role not found"));
             Set<Role> roles = new HashSet<>();
-            roles.add(request.getRole());
+            roles.add(role);
             registerUser.setRoles(roles);
         }
 
