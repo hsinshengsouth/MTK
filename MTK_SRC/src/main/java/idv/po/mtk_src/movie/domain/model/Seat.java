@@ -2,6 +2,8 @@ package idv.po.mtk_src.movie.domain.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "screen_seats", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"screen_id", "row_label", "seat_no"})
@@ -11,15 +13,16 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ScreenSeat {
+public class Seat {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "seat_id")
-    private Long seatId;
+    @GeneratedValue
+    @Column(name = "seat_id", nullable = false, updatable = false)
+    private UUID seatId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "screen_id", nullable = false)
+    @JoinColumn(name = "screen_id", nullable = false,
+            foreignKey = @ForeignKey(name = "fk_screen_seats"))
     private Screen screen;
 
     @Column(name = "row_label", nullable = false, length = 5)

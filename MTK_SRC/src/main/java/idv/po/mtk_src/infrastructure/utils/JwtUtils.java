@@ -1,4 +1,4 @@
-package idv.po.mtk_src.infrastructure.AuthUtils;
+package idv.po.mtk_src.infrastructure.utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

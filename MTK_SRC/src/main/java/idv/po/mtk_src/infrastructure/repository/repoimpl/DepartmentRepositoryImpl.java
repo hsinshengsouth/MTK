@@ -1,6 +1,8 @@
-package idv.po.mtk_src.management.domain.department;
+package idv.po.mtk_src.infrastructure.repository.repoimpl;
 
 import idv.po.mtk_src.infrastructure.repository.DepartmentJpaRepository;
+import idv.po.mtk_src.management.domain.department.Department;
+import idv.po.mtk_src.management.domain.department.DepartmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,7 +13,7 @@ import java.util.Optional;
 @Repository
 @Transactional
 @RequiredArgsConstructor
-public class DepartmentRepositoryImpl implements DepartmentRepository{
+public class DepartmentRepositoryImpl implements DepartmentRepository {
 
     private final DepartmentJpaRepository departmentRepo;
 

@@ -1,6 +1,6 @@
 package idv.po.mtk_src.infrastructure.auth;
 
-import idv.po.mtk_src.infrastructure.AuthUtils.JwtUtils;
+import idv.po.mtk_src.infrastructure.utils.JwtUtils;
 import idv.po.mtk_src.management.domain.user.ManageUser;
 import idv.po.mtk_src.management.domain.user.ManageUserRepository;
 import idv.po.mtk_src.management.domain.user.Role;

@@ -11,6 +11,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Document(indexName = "movie")
@@ -18,7 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class MovieReadModel extends MovieInfo {
+public class MovieReadModel  {
     @Id
     private String movieID;
 
@@ -39,7 +40,7 @@ public class MovieReadModel extends MovieInfo {
     private String description;
 
     @Field(type = FieldType.Float)
-    private float rating;
+    private double rating;
 
     @Field(type = FieldType.Integer)
     @JsonProperty("runtime_minutes")
@@ -56,12 +57,12 @@ public class MovieReadModel extends MovieInfo {
     @Field(type = FieldType.Date)
     @JsonProperty("start_date")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private LocalDate startDate;
+    private ZonedDateTime startDate;
 
     @Field(type = FieldType.Date)
     @JsonProperty("end_date")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private LocalDate endDate;
+    private ZonedDateTime endDate;
 
     @Field(type = FieldType.Date)
     @JsonProperty("create_time")
@@ -96,12 +97,13 @@ public class MovieReadModel extends MovieInfo {
 
 
     @Data
+    @Builder
     @AllArgsConstructor
     @NoArgsConstructor
     public static class Showtime {
         @Field(type = FieldType.Keyword)
-        @JsonProperty("theater_id")
-        private String theaterId;
+        @JsonProperty("screen_name")
+        private String screenName;
 
         @Field(type = FieldType.Keyword)
         @JsonProperty("theater_name")
@@ -110,11 +112,7 @@ public class MovieReadModel extends MovieInfo {
         @Field(type = FieldType.Date)
         @JsonProperty("date_time")
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-        private LocalDateTime dateTime;
-
-        @Field(type = FieldType.Integer)
-        @JsonProperty("seats_available")
-        private int seatsAvailable;
+        private ZonedDateTime dateTime;
 
         @Field(type = FieldType.Float)
         private BigDecimal price;

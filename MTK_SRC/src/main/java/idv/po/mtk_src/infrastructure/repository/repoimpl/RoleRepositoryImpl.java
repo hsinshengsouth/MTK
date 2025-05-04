@@ -1,6 +1,8 @@
-package idv.po.mtk_src.management.domain.user;
+package idv.po.mtk_src.infrastructure.repository.repoimpl;
 
 import idv.po.mtk_src.infrastructure.repository.RoleJpaRepository;
+import idv.po.mtk_src.management.domain.user.Role;
+import idv.po.mtk_src.management.domain.user.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,7 +11,7 @@ import java.util.Optional;
 @Repository
 @Transactional
 @RequiredArgsConstructor
-public class RoleRepositoryImpl implements RoleRepository{
+public class RoleRepositoryImpl implements RoleRepository {
 
    private final RoleJpaRepository roleRepository;
 

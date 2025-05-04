@@ -21,7 +21,7 @@ public class MovieCommandController {
             @RequestBody AddMovieCommand movieCommand
     ){
         commandService.addMovie(movieCommand);
-        return ResponseEntity.status(HttpStatus.OK).body("");
+        return ResponseEntity.status(HttpStatus.OK).body("Add a new movie successfully");
     }
 
 

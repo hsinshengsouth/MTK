@@ -1,4 +1,4 @@
-package idv.po.mtk_src.movie.domain.command.repoimpl;
+package idv.po.mtk_src.infrastructure.repository.repoimpl;
 
 import idv.po.mtk_src.infrastructure.repository.MovieCommandJpaRepository;
 import idv.po.mtk_src.movie.domain.command.MovieCommandRepository;

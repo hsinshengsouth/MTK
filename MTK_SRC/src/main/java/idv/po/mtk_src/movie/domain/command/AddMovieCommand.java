@@ -3,10 +3,13 @@ package idv.po.mtk_src.movie.domain.command;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.UUID;
 
 public record AddMovieCommand(
-        String movieId,
-        String title,
+
+        String chTitle,
+        String enTitle,
+        String keyword,
         List<String> genres,
         String director,
         List<String> actors,
@@ -22,10 +25,10 @@ public record AddMovieCommand(
         ZonedDateTime updateTime
 ) {
     public record Showtime(
-            String theaterId,
+            UUID theaterId,
             String theaterName,
+            UUID screenId,
             ZonedDateTime dateTime,
-            int seatsAvailable,
             BigDecimal price
     ) {
 

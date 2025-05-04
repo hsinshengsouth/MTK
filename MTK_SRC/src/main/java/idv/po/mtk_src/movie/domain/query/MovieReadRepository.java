@@ -4,6 +4,8 @@ import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public interface MovieReadRepository  {
@@ -32,10 +34,9 @@ public interface MovieReadRepository  {
      * */
     List<MovieReadModel>findByDescriptionContaining(String description) throws IOException;
 
+    void saveMovie(MovieReadModel movie);
 
-
-
-
+    Optional<MovieReadModel>findById(UUID movieId);
 
 
 

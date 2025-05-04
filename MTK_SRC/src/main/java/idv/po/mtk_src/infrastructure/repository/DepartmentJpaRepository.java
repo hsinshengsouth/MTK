@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.util.List;
 import java.util.Optional;
-@EnableJpaRepositories
+
 public interface DepartmentJpaRepository extends JpaRepository<Department, Integer>, DepartmentRepository {
     List<Department> findAll();
     Optional<Department>findByDeptId( Integer deptId);

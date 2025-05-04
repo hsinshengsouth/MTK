@@ -104,6 +104,9 @@
             <scope>runtime</scope>
         </dependency>
 
+
+
+
         <!-- kafka -->
         <dependency>
             <groupId>org.springframework.kafka</groupId>
@@ -123,8 +126,18 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>5.4.17.Final</version>
+        </dependency>
 
 
+        <dependency>
+            <groupId>com.vladmihalcea</groupId>
+            <artifactId>hibernate-types-60</artifactId>
+            <version>2.21.1</version>
+        </dependency>
 
     </dependencies>
 

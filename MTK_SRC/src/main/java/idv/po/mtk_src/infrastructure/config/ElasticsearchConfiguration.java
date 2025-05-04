@@ -12,7 +12,7 @@ import org.springframework.data.elasticsearch.client.erhlc.RestClients;
 import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
 
 @Configuration
-@EnableElasticsearchRepositories(basePackages = "idv.po.mtk_src.movie.infrastructure.persistence")
+@EnableElasticsearchRepositories(basePackages = "idv.po.mtk_src.infrastructure.repository")
 public class ElasticsearchConfiguration extends AbstractElasticsearchConfiguration {
 
     @Value("${spring.elasticsearch.uris}")

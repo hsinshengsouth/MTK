@@ -20,24 +20,29 @@ import org.springframework.stereotype.Repository;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Repository
-public class MovieReadElasticsearchRepository implements MovieReadRepository {
+public class MovieReadEsRepository implements MovieReadRepository {
 
 
-    private static final Logger logger = LoggerFactory.getLogger(MovieReadElasticsearchRepository.class);
+    private static final Logger logger = LoggerFactory.getLogger(MovieReadEsRepository.class);
     private static final String index = "movie";
 
     private final RestHighLevelClient client;
-
     private final SearchRequest searchRequest;
     private final SearchSourceBuilder sourceBuilder;
+    private final MovieReadJpaRepository readJpaRepository;
 
 
-    public MovieReadElasticsearchRepository(@Qualifier("customElasticsearchClient") RestHighLevelClient client) {
+
+
+    public MovieReadEsRepository(@Qualifier("customElasticsearchClient") RestHighLevelClient client, MovieReadJpaRepository repo) {
         this.client = client;
         this.searchRequest = new SearchRequest(index);
         this.sourceBuilder = new SearchSourceBuilder();
+        this.readJpaRepository=repo;
         logger.info("Elasticsearch Connected: {}", client);
     }
 
@@ -63,6 +68,8 @@ public class MovieReadElasticsearchRepository implements MovieReadRepository {
     public List<MovieReadModel> findByDescriptionContaining(String description) throws IOException {
         return searchByField("description", description);
     }
+
+
 
 
     private List<MovieReadModel> multiMatchQuery(String value, String field) throws IOException {
@@ -94,6 +101,16 @@ public class MovieReadElasticsearchRepository implements MovieReadRepository {
         });
 
         return movies;
+    }
+
+    @Override
+    public void saveMovie(MovieReadModel movie) {
+        readJpaRepository.save(movie);
+    }
+
+    @Override
+    public Optional<MovieReadModel> findById(UUID movieId) {
+        return readJpaRepository.findById(movieId);
     }
 
 
