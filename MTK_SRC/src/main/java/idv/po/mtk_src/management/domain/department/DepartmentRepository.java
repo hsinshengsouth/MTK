@@ -6,6 +6,6 @@ import java.util.Optional;
 public interface DepartmentRepository {
     List<Department> findAll();
     Optional<Department>findByDeptId( Integer deptId);
-    Department save(Department dept);
+    Department saveDept(Department dept);
 
 }

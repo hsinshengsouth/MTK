@@ -56,12 +56,12 @@ public class MovieReadEsRepository implements MovieReadRepository {
 
     @Override
     public List<MovieReadModel> findByEnMovieName(String enMovieName) throws IOException {
-        return multiMatchQuery(enMovieName, "movie_name.enMovieName");
+        return multiMatchQuery(enMovieName, "movieName.enMovieName");
     }
 
     @Override
     public List<MovieReadModel> findByChMovieName(String chMovieName) throws IOException {
-        return multiMatchQuery(chMovieName, "movie_name.chMovieName");
+        return multiMatchQuery(chMovieName, "movieName.chMovieName");
     }
 
     @Override

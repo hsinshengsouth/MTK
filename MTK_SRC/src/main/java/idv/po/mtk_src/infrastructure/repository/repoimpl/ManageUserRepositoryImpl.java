@@ -24,21 +24,21 @@ public class ManageUserRepositoryImpl implements ManageUserRepository {
 
     @Override
     public Optional<ManageUser> findByUserEmail(String userEmail) {
-        return manageUserRepo.findByUserEmail(userEmail);
+         return manageUserRepo.findByUserEmail(userEmail);
     }
 
     @Override
     public Optional<ManageUser> findByUserId(Integer userId) {
-        return manageUserRepo.findByUserId(userId) ;
+        return manageUserRepo.findById(userId) ;
     }
 
     @Override
-    public ManageUser save(ManageUser user) {
+    public ManageUser persistUser(ManageUser user) {
         return manageUserRepo.save(user);
     }
 
     @Override
-    public Integer updateStatus(String userId, String userStatus) {
+    public Integer updateStatus(Integer userId, String userStatus) {
         return manageUserRepo.updateStatus(userId,userStatus);
     }
 }

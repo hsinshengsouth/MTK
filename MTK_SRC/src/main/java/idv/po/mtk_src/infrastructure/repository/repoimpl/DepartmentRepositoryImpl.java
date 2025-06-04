@@ -24,11 +24,11 @@ public class DepartmentRepositoryImpl implements DepartmentRepository {
 
     @Override
     public Optional<Department> findByDeptId(Integer deptId) {
-        return departmentRepo.findByDeptId(deptId);
+        return departmentRepo.findById(deptId);
     }
 
     @Override
-    public Department save(Department dept) {
+    public Department saveDept(Department dept) {
         return departmentRepo.save(dept);
     }
 }

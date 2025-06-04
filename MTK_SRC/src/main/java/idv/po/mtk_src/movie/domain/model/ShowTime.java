@@ -44,9 +44,9 @@ public class ShowTime {
     public ShowtimeCreatedEvent createShowtimeCreatedEvent() {
         return new ShowtimeCreatedEvent(
                 this.showtimeId,
-                this.movie,
-                this.theater,
-                this.screen,
+                this.movie.getMovieId(),
+                this.theater.getTheaterId(),
+                this.screen.getScreenId(),
                 this.dateTime,
                 this.price
         );

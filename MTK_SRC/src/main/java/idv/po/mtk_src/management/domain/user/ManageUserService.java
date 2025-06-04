@@ -28,7 +28,7 @@ public class ManageUserService {
     }
 
     public ManageUser saveManageUser(ManageUser user) {
-        return userRepository.save(user);
+        return userRepository.persistUser(user);
     }
 
 

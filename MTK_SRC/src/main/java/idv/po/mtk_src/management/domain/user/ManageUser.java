@@ -51,12 +51,12 @@ public class ManageUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.userName;
+        return this.userEmail;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return UserDetails.super.isAccountNonExpired();
+        return true;
     }
 
     @Override

@@ -1,9 +1,13 @@
 package idv.po.mtk_src.infrastructure.listener;
 
+import idv.po.mtk_src.movie.domain.command.ScreenRepository;
 import idv.po.mtk_src.movie.domain.command.ShowtimeRepository;
+import idv.po.mtk_src.movie.domain.command.TheaterRepository;
 import idv.po.mtk_src.movie.domain.event.MovieCreatedEvent;
 import idv.po.mtk_src.movie.domain.event.ShowtimeCreatedEvent;
+import idv.po.mtk_src.movie.domain.model.Screen;
 import idv.po.mtk_src.movie.domain.model.ShowTime;
+import idv.po.mtk_src.movie.domain.model.Theater;
 import idv.po.mtk_src.movie.domain.query.MovieReadModel;
 import idv.po.mtk_src.movie.domain.query.MovieReadRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +28,8 @@ public class KafkaEventsConsumer {
 
     private final MovieReadRepository movieReadRepository;
     private final ShowtimeRepository showtimeRepository;
-
+    private final TheaterRepository theaterRepository;
+    private final ScreenRepository screenRepository;
 
     @KafkaListener(
             topics = {"movie-created"},
@@ -34,6 +39,7 @@ public class KafkaEventsConsumer {
     public void handleMovieCreated(MovieCreatedEvent event) {
         MovieReadModel readModel=
                 MovieReadModel.builder()
+                        .movieID(event.movieId().toString())
                         .movieName(
                                 new MovieReadModel.MovieName(
                                         event.enTitle(),
@@ -67,7 +73,7 @@ public class KafkaEventsConsumer {
     )
     public void handleShowtimeCreated(ShowtimeCreatedEvent event) {
         Optional<MovieReadModel> movieRead =
-                movieReadRepository.findById(event.movie().getMovieId());
+                movieReadRepository.findById(event.movieId());
 
        Optional<ShowTime> showTime=
                showtimeRepository.findByShowTimeId(event.showtimeId());
@@ -77,11 +83,18 @@ public class KafkaEventsConsumer {
             MovieReadModel model = movieRead.get();
             ShowTime show=showTime.get();
 
+            Theater theater = theaterRepository.findByTheaterId(show.getTheater().getTheaterId())
+                    .orElseThrow(() -> new IllegalStateException("Theater not found"));
+
+            Screen screen = screenRepository.findByScreenId(show.getScreen().getScreenId())
+                    .orElseThrow(() -> new IllegalStateException("Screen not found"));
+
+
             List<MovieReadModel.Showtime> updatedShowtimes = new ArrayList<>(model.getShowtime());
             updatedShowtimes.add(
                     MovieReadModel.Showtime.builder()
-                        .screenName(show.getScreen().getScreenName())
-                        .theaterName(show.getTheater().getTheaterName())
+                        .screenName(screen.getScreenName())
+                        .theaterName(theater.getTheaterName())
                         .dateTime(event.dateTime())
                         .price(event.price())
                         .build()
@@ -92,7 +105,7 @@ public class KafkaEventsConsumer {
 
         } else {
             logger.warn("Movie ID [{}] not found for showtime. Might be eventual consistency issue.",
-                    event.movie().getMovieId()
+                    event.movieId()
             );
         }
     }

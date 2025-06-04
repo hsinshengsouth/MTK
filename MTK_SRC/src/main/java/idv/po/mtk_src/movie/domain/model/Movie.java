@@ -6,9 +6,6 @@ import idv.po.mtk_src.movie.domain.event.MovieCreatedEvent;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
-
-
 
 import java.time.ZonedDateTime;
 
@@ -22,10 +19,9 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 public class Movie {
 
-    @jakarta.persistence.Id
+    @Id
     @GeneratedValue(generator = "uuid2")
     @Column(name = "movie_id", updatable = false, nullable = false)
     private UUID movieId;
@@ -45,11 +41,11 @@ public class Movie {
     private ZonedDateTime updateTime;
 
     @Type(JsonBinaryType.class)
-    @Column(columnDefinition = "jsonb")
+    @Column(name = "actors", columnDefinition = "jsonb")
     private List<String> actors;
 
     @Type(JsonBinaryType.class)
-    @Column(columnDefinition = "jsonb")
+    @Column(name = "genres",columnDefinition = "jsonb")
     private List<String> genres;
 
 

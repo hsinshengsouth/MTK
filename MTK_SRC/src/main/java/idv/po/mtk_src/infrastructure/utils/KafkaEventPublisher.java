@@ -14,13 +14,13 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class KafkaEventPublisher {
 
-    private final KafkaTemplate<UUID, Object> kafkaTemplate;
+    private final KafkaTemplate<String , Object> kafkaTemplate;
 
     public <T> void publish(String topic, UUID key, T event) {
-        kafkaTemplate.send(topic, key, event);
+        kafkaTemplate.send(topic, key.toString(), event);
     }
 
-    public <T> void publishAll(List<ProducerRecord<UUID, Object>> kafkaRecords) {
+    public <T> void publishAll(List<ProducerRecord<String, Object>> kafkaRecords) {
         kafkaRecords.forEach(record->kafkaTemplate.send (record));
     }
 

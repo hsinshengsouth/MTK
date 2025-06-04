@@ -24,18 +24,20 @@ public class AuthenticationService {
     private final JwtUtils jwtUtils;
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
+    private final RedisTokenService redisTokenService;
     
     private final RoleRepository roleRepository;
     public AuthenticationService(
-            @Qualifier("manageUserJpaRepository") ManageUserRepository manageUserRepository,
+            ManageUserRepository manageUserRepository,
             JwtUtils jwtUtils,
             AuthenticationManager authenticationManager,
-            PasswordEncoder passwordEncoder,
+            PasswordEncoder passwordEncoder, RedisTokenService redisTokenService,
             @Qualifier("roleJpaRepository") RoleRepository roleRepository) {
         this.manageUserRepository = manageUserRepository;
         this.jwtUtils=jwtUtils;
         this.authenticationManager=authenticationManager;
         this.passwordEncoder=passwordEncoder;
+        this.redisTokenService = redisTokenService;
         this.roleRepository = roleRepository;
     }
 
@@ -57,7 +59,7 @@ public class AuthenticationService {
             registerUser.setPassword(passwordEncoder.encode(request.getPassword()));
         }
 
-        var savedUser = manageUserRepository.save(registerUser);
+        var savedUser = manageUserRepository.persistUser(registerUser);
         var jwtToken = jwtUtils.generateToken(savedUser);
 
         return AuthenticationResponse
@@ -77,6 +79,8 @@ public class AuthenticationService {
 
         var manageUser = manageUserRepository.findByUserEmail(request.getUserEmail()).orElseThrow();
         var jwtToken =  jwtUtils.generateToken(manageUser);
+        redisTokenService.cacheToken(jwtToken, manageUser.getUserEmail(), jwtUtils.getExpirationMs());
+
 
         return AuthenticationResponse
                     .builder()

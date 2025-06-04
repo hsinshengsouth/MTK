@@ -1,6 +1,7 @@
 package idv.po.mtk_src.movie.domain.query;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.springframework.data.annotation.Id;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Document(indexName = "movie")
 @Data
 @AllArgsConstructor
@@ -24,8 +26,7 @@ public class MovieReadModel  {
     private String movieID;
 
     @Field(type = FieldType.Object)
-    @JsonProperty("movie_name")
-    private MovieName movieName;
+      private MovieName movieName;
 
     @Field(type = FieldType.Keyword)
     private List<String> genres;
@@ -43,39 +44,25 @@ public class MovieReadModel  {
     private double rating;
 
     @Field(type = FieldType.Integer)
-    @JsonProperty("runtime_minutes")
     private int runtimeMinutes;
 
     @Field(type = FieldType.Keyword)
-    @JsonProperty("poster_url")
     private String posterUrl;
 
     @Field(type = FieldType.Keyword)
-    @JsonProperty("movie_status")
-    private String movieStatus;
+     private String movieStatus;
 
     @Field(type = FieldType.Date)
-    @JsonProperty("start_date")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private ZonedDateTime startDate;
 
     @Field(type = FieldType.Date)
-    @JsonProperty("end_date")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+   // @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private ZonedDateTime endDate;
 
-    @Field(type = FieldType.Date)
-    @JsonProperty("create_time")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private LocalDateTime createTime;
-
-    @Field(type = FieldType.Date)
-    @JsonProperty("update_time")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private LocalDateTime updateTime;
 
     @Field(type = FieldType.Nested)
-    @JsonProperty("showtimes")
+    @JsonProperty("showtime")
     private List<Showtime> showtime;
 
     @Data
@@ -100,18 +87,16 @@ public class MovieReadModel  {
     @Builder
     @AllArgsConstructor
     @NoArgsConstructor
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Showtime {
         @Field(type = FieldType.Keyword)
-        @JsonProperty("screen_name")
         private String screenName;
 
         @Field(type = FieldType.Keyword)
-        @JsonProperty("theater_name")
-        private String theaterName;
+          private String theaterName;
 
         @Field(type = FieldType.Date)
-        @JsonProperty("date_time")
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+        //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
         private ZonedDateTime dateTime;
 
         @Field(type = FieldType.Float)

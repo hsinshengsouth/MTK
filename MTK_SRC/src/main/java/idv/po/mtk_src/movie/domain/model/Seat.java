@@ -5,7 +5,7 @@ import lombok.*;
 import java.util.UUID;
 
 @Entity
-@Table(name = "screen_seats", uniqueConstraints = {
+@Table(name = "seats", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"screen_id", "row_label", "seat_no"})
 })
 @Getter
@@ -34,8 +34,8 @@ public class Seat {
     @Column(name = "seat_type", length = 20)
     private String seatType = "REGULAR";
 
-    @Column(name = "is_active", length = 20)
-    private String isActive = "ACTIVE";
+    @Column(name = "is_active")
+    private Boolean isActive = true;
 
     @Column(name = "booking_status", length = 20)
     private String bookingStatus;

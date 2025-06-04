@@ -46,7 +46,7 @@ public class MovieCommandService {
         // 2.建立ShowTime 持久層
         List<ShowTime> showtimes = new ArrayList();
         //3.ShowTime事件 到 query side
-        List<ProducerRecord<UUID, Object>> kafkaRecords = new ArrayList<>();
+        List<ProducerRecord<String, Object>> kafkaRecords = new ArrayList<>();
 
         for(AddMovieCommand.Showtime cmdShowtime :command.showtimes()){
             Theater theater =theaterRepository.findByTheaterId(
@@ -73,10 +73,10 @@ public class MovieCommandService {
 
             //3-1 事件觸發
             showtimes.forEach(show -> {
-                ProducerRecord<UUID, Object> record =
+                ProducerRecord<String, Object> record =
                         new ProducerRecord<>(
                                 "showtime-created",
-                                show.getShowtimeId(),
+                                show.getShowtimeId().toString(),
                                 show.createShowtimeCreatedEvent()
                         );
                 kafkaRecords.add(record);

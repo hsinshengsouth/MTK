@@ -2,10 +2,7 @@ package idv.po.mtk_src.infrastructure.auth;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -13,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController {
 
     private final AuthenticationService service;
-
+    private final RedisTokenService redisTokenService;
 
 
 
@@ -25,8 +22,6 @@ public class AuthenticationController {
     }
 
 
-
-
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login(
             @RequestBody AuthenticationRequest request
@@ -35,7 +30,14 @@ public class AuthenticationController {
     }
 
 
-
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(@RequestHeader("Authorization") String authHeader) {
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            String token = authHeader.substring(7);
+            redisTokenService.removeToken(token);
+        }
+        return ResponseEntity.ok("Logout successful");
+    }
 
 
 

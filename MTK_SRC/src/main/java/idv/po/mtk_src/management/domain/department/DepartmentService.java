@@ -29,7 +29,7 @@ public class DepartmentService {
     }
 
     public void saveDept(Department dept){
-        deptRepository.save(dept);
+        deptRepository.saveDept(dept);
     }
 
 
