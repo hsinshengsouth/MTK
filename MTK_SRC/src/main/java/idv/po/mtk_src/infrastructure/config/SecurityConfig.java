@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -53,11 +54,21 @@ public class SecurityConfig {
 
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    @Order(1)
+    public SecurityFilterChain adminSecurityFilterChain(HttpSecurity http) throws Exception {
        return  http
+               .securityMatcher("/auth/admin/**","movies/command")
                .csrf(AbstractHttpConfigurer::disable)
-               .authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**","/movie/**","/login/**","/movies/query").permitAll()
-               .anyRequest().authenticated())
+               .authorizeHttpRequests(
+                       auth -> auth
+                       .requestMatchers(
+                               "/auth/admin/register",
+                               "/auth/admin/login",
+                               "/auth/admin/logout"
+                       ).permitAll()
+                       .requestMatchers("/movies/command").hasAnyRole("ADMIN", "USER")
+                       .anyRequest().authenticated()
+               )
                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                .authenticationProvider(authenticationProvider())
                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
@@ -65,6 +76,44 @@ public class SecurityConfig {
 
     }
 
+
+    @Bean
+    @Order(1)
+    public SecurityFilterChain memberSecurityFilterChain(HttpSecurity http) throws Exception {
+        return  http
+                .securityMatcher("/auth/member/**")
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(
+                                "/auth/member/register",
+                                "/auth/member/login",
+                                "/auth/member/logout").permitAll()
+                        .anyRequest().authenticated())
+                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authenticationProvider(authenticationProvider())
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .build();
+
+    }
+
+
+
+    @Bean
+    @Order(3)
+    public SecurityFilterChain publicQueryChain(HttpSecurity http) throws Exception {
+        http.securityMatcher("/movies/query/**")
+            .csrf(csrf -> csrf.disable())
+            .authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
+        return http.build();
+    }
+
+    // 4. 其它路徑，預設不允許
+    @Bean
+    @Order(4)
+    public SecurityFilterChain defaultChain(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests(auth -> auth.anyRequest().denyAll());
+        return http.build();
+    }
 
 
 }

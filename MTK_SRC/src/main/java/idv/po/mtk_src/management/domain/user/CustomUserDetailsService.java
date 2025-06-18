@@ -9,11 +9,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final ManageUserRepository repository;
+    private final UserRepository repository;
 
 
     public CustomUserDetailsService(
-            @Qualifier("manageUserRepositoryImpl") ManageUserRepository manageUserRepository
+            @Qualifier("manageUserRepositoryImpl") UserRepository manageUserRepository
     ) {
         this.repository = manageUserRepository;
     }

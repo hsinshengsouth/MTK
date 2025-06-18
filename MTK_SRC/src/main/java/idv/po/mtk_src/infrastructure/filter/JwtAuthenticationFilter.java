@@ -1,6 +1,6 @@
 package idv.po.mtk_src.infrastructure.filter;
 
-import idv.po.mtk_src.infrastructure.auth.RedisTokenService;
+import idv.po.mtk_src.infrastructure.redis.RedisTokenService;
 import idv.po.mtk_src.infrastructure.utils.JwtUtils;
 import idv.po.mtk_src.management.domain.user.CustomUserDetailsService;
 import jakarta.servlet.FilterChain;
