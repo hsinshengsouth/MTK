@@ -1,7 +1,7 @@
 package idv.po.mtk_src.management.app;
 
 import idv.po.mtk_src.infrastructure.exception.ResourceNotFoundException;
-import idv.po.mtk_src.management.domain.ticket.AddTicketCommand;
+import idv.po.mtk_src.management.web.AddTicketCommand;
 import idv.po.mtk_src.management.domain.ticket.Ticket;
 import idv.po.mtk_src.management.domain.ticket.TicketRepository;
 import idv.po.mtk_src.movie.domain.command.ScreenRepository;

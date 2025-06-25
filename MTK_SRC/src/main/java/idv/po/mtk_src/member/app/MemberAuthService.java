@@ -1,7 +1,7 @@
 package idv.po.mtk_src.member.app;
 
 import idv.po.mtk_src.management.domain.user.AuthenticationResponse;
-import idv.po.mtk_src.infrastructure.redis.RedisTokenService;
+import idv.po.mtk_src.infrastructure.redis.RedisService;
 import idv.po.mtk_src.infrastructure.utils.JwtUtils;
 import idv.po.mtk_src.member.domain.member.Member;
 import idv.po.mtk_src.member.domain.member.MemberRepository;
@@ -22,7 +22,7 @@ public class MemberAuthService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final MemberRepository memberRepository;
-    private final RedisTokenService redisTokenService;
+    private final RedisService redisService;
 
     public AuthenticationResponse register(MemberRegister request) {
         Member member = new Member();
@@ -57,7 +57,7 @@ public class MemberAuthService {
 
         var rtnMember=memberRepository.findMemberByMemberEmail(request.getMemberEmail()).orElseThrow();
         var jwtToken=jwtUtils.generateToken(rtnMember);
-        redisTokenService.cacheToken(jwtToken, rtnMember.getMemberEmail(), jwtUtils.getExpirationMs());
+        redisService.cacheToken(jwtToken, rtnMember.getMemberEmail(), jwtUtils.getExpirationMs());
 
 
 

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserAuthController {
 
     private final UserAuthService service;
-    private final RedisTokenService redisTokenService;
+    private final RedisService redisService;
 
 
 
@@ -37,7 +37,7 @@ public class UserAuthController {
     public ResponseEntity<?> logout(@RequestHeader("Authorization") String authHeader) {
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7);
-            redisTokenService.removeToken(token);
+            redisService.removeToken(token);
         }
         return ResponseEntity.ok("Logout successful");
     }

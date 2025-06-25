@@ -1,6 +1,7 @@
 package idv.po.mtk_src.infrastructure.config;
 
 
+import idv.po.mtk_src.booking.vo.BookingSuccessEvent;
 import idv.po.mtk_src.movie.domain.event.MovieCreatedEvent;
 import idv.po.mtk_src.movie.domain.event.ShowtimeCreatedEvent;
 import org.apache.kafka.clients.admin.NewTopic;
@@ -43,6 +44,10 @@ public class KafkaConfig {
     }
 
 
+    @Bean
+    public NewTopic bookingCreatedTopic(@Value("${kafka.topic.booking-success}") String topicName) {
+        return new NewTopic(topicName, 1, (short) 1);
+    }
 
    @Bean
     public<T>  ProducerFactory<String, T> producerFactory() {
@@ -94,6 +99,13 @@ public class KafkaConfig {
     public ConcurrentKafkaListenerContainerFactory<String, ShowtimeCreatedEvent> showtimeKafkaListenerContainerFactory(
             KafkaConfig config) {
         return config.createListenerFactory(ShowtimeCreatedEvent.class);
+    }
+
+
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, BookingSuccessEvent> bookingKafkaListenerContainerFactory(
+            KafkaConfig config) {
+        return config.createListenerFactory(BookingSuccessEvent.class);
     }
 
 

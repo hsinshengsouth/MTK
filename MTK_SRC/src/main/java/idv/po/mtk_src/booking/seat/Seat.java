@@ -1,4 +1,5 @@
-package idv.po.mtk_src.movie.domain.model;
+package idv.po.mtk_src.booking.seat;
+import idv.po.mtk_src.movie.domain.model.Screen;
 import jakarta.persistence.*;
 import lombok.*;
 

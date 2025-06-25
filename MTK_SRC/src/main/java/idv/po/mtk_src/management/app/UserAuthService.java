@@ -2,7 +2,7 @@ package idv.po.mtk_src.management.app;
 
 import idv.po.mtk_src.management.web.UserRequest;
 import idv.po.mtk_src.management.domain.user.AuthenticationResponse;
-import idv.po.mtk_src.infrastructure.redis.RedisTokenService;
+import idv.po.mtk_src.infrastructure.redis.RedisService;
 import idv.po.mtk_src.management.web.UserRegister;
 import idv.po.mtk_src.infrastructure.utils.JwtUtils;
 import idv.po.mtk_src.management.domain.user.User;
@@ -28,20 +28,20 @@ public class UserAuthService {
     private final JwtUtils jwtUtils;
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
-    private final RedisTokenService redisTokenService;
+    private final RedisService redisService;
     
     private final RoleRepository roleRepository;
     public UserAuthService(
             UserRepository manageUserRepository,
             JwtUtils jwtUtils,
             AuthenticationManager authenticationManager,
-            PasswordEncoder passwordEncoder, RedisTokenService redisTokenService,
+            PasswordEncoder passwordEncoder, RedisService redisService,
             @Qualifier("roleJpaRepository") RoleRepository roleRepository) {
         this.manageUserRepository = manageUserRepository;
         this.jwtUtils=jwtUtils;
         this.authenticationManager=authenticationManager;
         this.passwordEncoder=passwordEncoder;
-        this.redisTokenService = redisTokenService;
+        this.redisService = redisService;
         this.roleRepository = roleRepository;
     }
 
@@ -83,7 +83,7 @@ public class UserAuthService {
 
         var manageUser = manageUserRepository.findByUserEmail(request.getUserEmail()).orElseThrow();
         var jwtToken =  jwtUtils.generateToken(manageUser);
-        redisTokenService.cacheToken(jwtToken, manageUser.getUserEmail(), jwtUtils.getExpirationMs());
+        redisService.cacheToken(jwtToken, manageUser.getUserEmail(), jwtUtils.getExpirationMs());
 
 
         return AuthenticationResponse

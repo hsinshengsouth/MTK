@@ -1,5 +1,7 @@
 package idv.po.mtk_src.infrastructure.listener;
 
+import idv.po.mtk_src.booking.vo.BookingSuccessEvent;
+import idv.po.mtk_src.infrastructure.message.MessageService;
 import idv.po.mtk_src.movie.domain.command.ScreenRepository;
 import idv.po.mtk_src.movie.domain.command.ShowtimeRepository;
 import idv.po.mtk_src.movie.domain.command.TheaterRepository;
@@ -30,6 +32,7 @@ public class KafkaEventsConsumer {
     private final ShowtimeRepository showtimeRepository;
     private final TheaterRepository theaterRepository;
     private final ScreenRepository screenRepository;
+    private final MessageService messageService;
 
     @KafkaListener(
             topics = {"movie-created"},
@@ -109,6 +112,17 @@ public class KafkaEventsConsumer {
             );
         }
     }
+
+
+
+    @KafkaListener(topics = "booking-success",
+                   groupId = "email-group",
+                   containerFactory ="bookingKafkaListenerContainerFactory")
+    public void onBookingSuccess(BookingSuccessEvent event) {
+        messageService.sendBookingSuccessEmail(event);
+    }
+
+
 
 
 

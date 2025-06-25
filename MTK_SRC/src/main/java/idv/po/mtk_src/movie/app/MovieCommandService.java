@@ -36,7 +36,7 @@ public class MovieCommandService {
         movieRepository.addMovie(movie);
         kafkaPublisher.publish(
                 "movie-created",
-                movie.getMovieId(),
+                movie.getMovieId().toString(),
                 movie.createMovieCreatedEvent()
         );
 

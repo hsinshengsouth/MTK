@@ -1,8 +1,6 @@
 package idv.po.mtk_src.management.web;
 
 import idv.po.mtk_src.management.app.TicketService;
-import idv.po.mtk_src.management.domain.ticket.AddTicketCommand;
-import idv.po.mtk_src.movie.domain.command.AddMovieCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

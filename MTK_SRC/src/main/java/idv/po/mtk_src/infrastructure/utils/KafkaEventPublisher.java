@@ -16,12 +16,12 @@ public class KafkaEventPublisher {
 
     private final KafkaTemplate<String , Object> kafkaTemplate;
 
-    public <T> void publish(String topic, UUID key, T event) {
-        kafkaTemplate.send(topic, key.toString(), event);
+    public <T> void publish(String topic, String key, T event) {
+        kafkaTemplate.send(topic, key, event);
     }
 
     public <T> void publishAll(List<ProducerRecord<String, Object>> kafkaRecords) {
-        kafkaRecords.forEach(record->kafkaTemplate.send (record));
+        kafkaRecords.forEach(kafkaTemplate::send);
     }
 
 }

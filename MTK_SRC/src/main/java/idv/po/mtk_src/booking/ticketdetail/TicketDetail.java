@@ -1,4 +1,4 @@
-package idv.po.mtk_src.management.domain.ticket;
+package idv.po.mtk_src.booking.ticketdetail;
 
 import lombok.*;
 import jakarta.persistence.*;
@@ -24,6 +24,9 @@ public class TicketDetail {
 
     @Column(name = "member_id", nullable = false, columnDefinition = "UUID")
     private UUID memberId;
+
+    @Column(name = "showtime_id", nullable = false, columnDefinition = "UUID")
+    private UUID showtimeId;
 
     @Column(name = "row_label", nullable = false, length = 5)
     private String rowLabel;

@@ -2,7 +2,7 @@ package idv.po.mtk_src.member.web;
 
 
 import idv.po.mtk_src.management.domain.user.AuthenticationResponse;
-import idv.po.mtk_src.infrastructure.redis.RedisTokenService;
+import idv.po.mtk_src.infrastructure.redis.RedisService;
 import idv.po.mtk_src.member.app.MemberAuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +18,7 @@ public class MemberController {
 
 
     private final MemberAuthService authService;
-    private final RedisTokenService redisTokenService;
+    private final RedisService redisService;
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(

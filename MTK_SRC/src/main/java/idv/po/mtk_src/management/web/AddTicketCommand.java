@@ -1,4 +1,4 @@
-package idv.po.mtk_src.management.domain.ticket;
+package idv.po.mtk_src.management.web;
 
 import java.math.BigDecimal;
 import java.util.UUID;

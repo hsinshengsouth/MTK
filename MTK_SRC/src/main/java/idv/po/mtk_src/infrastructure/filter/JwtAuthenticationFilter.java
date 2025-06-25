@@ -1,6 +1,6 @@
 package idv.po.mtk_src.infrastructure.filter;
 
-import idv.po.mtk_src.infrastructure.redis.RedisTokenService;
+import idv.po.mtk_src.infrastructure.redis.RedisService;
 import idv.po.mtk_src.infrastructure.utils.JwtUtils;
 import idv.po.mtk_src.management.domain.user.CustomUserDetailsService;
 import jakarta.servlet.FilterChain;
@@ -25,7 +25,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtUtils jwtUtils;
     private final CustomUserDetailsService userDetailsService;
-    private final RedisTokenService redisTokenService;
+    private final RedisService redisService;
 
     @Override
     protected void doFilterInternal(
@@ -45,7 +45,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         jwtToken = authHeader.substring(7);
         userEmail = jwtUtils.getUserName(jwtToken);
 
-        if(!redisTokenService.isValidToken(jwtToken)){
+        if(!redisService.isValidToken(jwtToken)){
             filterChain.doFilter(request, response);
             return;
         }
