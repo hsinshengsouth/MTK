@@ -41,7 +41,7 @@ public class MovieCommandService {
         );
 
         // 2.建立ShowTime 持久層
-        List<ShowTime> showtimes = new ArrayList();
+        List<ShowTime> showtimes = new ArrayList<>();
         //3.ShowTime事件 到 query side
         List<ProducerRecord<String, Object>> kafkaRecords = new ArrayList<>();
 

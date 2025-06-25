@@ -1,6 +1,6 @@
 package idv.po.mtk_src.infrastructure.message;
 
-import idv.po.mtk_src.booking.vo.BookingResponse;
+
 import idv.po.mtk_src.booking.vo.BookingSuccessEvent;
 import idv.po.mtk_src.booking.vo.SeatInfo;
 import jakarta.mail.internet.MimeMessage;
@@ -52,7 +52,7 @@ public class MessageService {
             seatHtml.append(String.format("<li>第 %s 排 %d 號</li>", seat.getRowLabel(), seat.getSeatNo()));
         }
 
-        String mailContent = String.format("""
+        return  String.format("""
                 <html>
                 <body>
                     <h3>親愛的會員 %s 您好：</h3>
@@ -78,7 +78,7 @@ public class MessageService {
         );
 
 
-        return mailContent;
+
     }
 
 

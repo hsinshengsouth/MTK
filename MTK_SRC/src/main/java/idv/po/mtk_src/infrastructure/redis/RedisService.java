@@ -6,13 +6,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import idv.po.mtk_src.booking.seat.Seat;
 import idv.po.mtk_src.booking.seat.SeatRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.util.StringUtil;
-import org.apache.commons.codec.binary.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
-import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
