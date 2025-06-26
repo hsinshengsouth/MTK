@@ -38,47 +38,53 @@ services:
       - mtk_net
 
   kafka:
-      image: confluentinc/cp-kafka:7.6.0
-      container_name: kafka
-      depends_on:
-        - zookeeper
-      ports:
-        - "9092:9092"
-      environment:
-        KAFKA_BROKER_ID: 1
-        KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-        KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
-        KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      networks:
-        - mtk_net
+    image: confluentinc/cp-kafka:7.6.0
+    container_name: kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    networks:
+      - mtk_net
   elasticsearch:
-      image: docker.elastic.co/elasticsearch/elasticsearch:7.17.27
-      container_name: elasticsearch
-      environment:
-        - discovery.type=single-node
-        - xpack.security.enabled=false
-      ports:
-        - "9200:9200"
-      volumes:
-        - es-data:/usr/share/elasticsearch/data
-      networks:
-        - mtk_net
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.27
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    ports:
+      - "9200:9200"
+    volumes:
+      - es-data:/usr/share/elasticsearch/data
+    command:
+      - /bin/bash
+      - -c
+      - |
+        if [ ! -d plugins/ik ]; then
+          elasticsearch-plugin install --batch https://release.infinilabs.com/analysis-ik/stable/elasticsearch-analysis-ik-7.17.27.zip  
+        fi
+        /usr/local/bin/docker-entrypoint.sh elasticsearch
   kibana:
-      image: docker.elastic.co/kibana/kibana:7.17.27
-      container_name: kibana
-      depends_on:
-        - elasticsearch
-      ports:
-        - "5601:5601"
-      networks:
-        - mtk_net
+    image: docker.elastic.co/kibana/kibana:7.17.27
+    container_name: kibana
+    depends_on:
+      - elasticsearch
+    ports:
+      - "5601:5601"
+    networks:
+      - mtk_net
   redis:
-      image: redis:7
-      container_name: redis
-      ports:
-        - "6379:6379"
-      networks:
-        - mtk_net
+    image: redis:7
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - mtk_net
   redis_insight:
     image: redislabs/redisinsight:latest
     container_name: redisinsight
