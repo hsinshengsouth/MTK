@@ -16,17 +16,14 @@ import java.util.UUID;
 @NoArgsConstructor
 public class BookingResponse {
 
-    UUID ticketId;
-    List<UUID> ticketDetailId;
-    UUID showtimeId;
-    String movieName;
-    String screenName;
-    List<SeatInfo> seats;
-    ZonedDateTime showTime;
-    BigDecimal totalPrice;
-    String status;          // "SUCCESS", "PARTIAL", "FAIL"
-    ZonedDateTime bookingTime;
-
-
-
+  UUID ticketId;
+  List<UUID> ticketDetailId;
+  UUID showtimeId;
+  String movieName;
+  String screenName;
+  List<SeatInfo> seats;
+  ZonedDateTime showTime;
+  BigDecimal totalPrice;
+  String status; // "SUCCESS", "PARTIAL", "FAIL"
+  ZonedDateTime bookingTime;
 }

@@ -15,20 +15,20 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class DepartmentRepositoryImpl implements DepartmentRepository {
 
-    private final DepartmentJpaRepository departmentRepo;
+  private final DepartmentJpaRepository departmentRepo;
 
-    @Override
-    public List<Department> findAll() {
-        return departmentRepo.findAll();
-    }
+  @Override
+  public List<Department> findAll() {
+    return departmentRepo.findAll();
+  }
 
-    @Override
-    public Optional<Department> findByDeptId(Integer deptId) {
-        return departmentRepo.findById(deptId);
-    }
+  @Override
+  public Optional<Department> findByDeptId(Integer deptId) {
+    return departmentRepo.findById(deptId);
+  }
 
-    @Override
-    public Department saveDept(Department dept) {
-        return departmentRepo.save(dept);
-    }
+  @Override
+  public Department saveDept(Department dept) {
+    return departmentRepo.save(dept);
+  }
 }

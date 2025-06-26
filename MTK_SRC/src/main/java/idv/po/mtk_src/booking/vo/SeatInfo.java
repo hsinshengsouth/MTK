@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SeatInfo {
-    String rowLabel;
-    int seatNo;
+  String rowLabel;
+  int seatNo;
 }

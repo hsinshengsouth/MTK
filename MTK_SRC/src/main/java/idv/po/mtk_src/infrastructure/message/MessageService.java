@@ -1,6 +1,5 @@
 package idv.po.mtk_src.infrastructure.message;
 
-
 import idv.po.mtk_src.booking.vo.BookingSuccessEvent;
 import idv.po.mtk_src.booking.vo.SeatInfo;
 import jakarta.mail.internet.MimeMessage;
@@ -15,44 +14,36 @@ import java.time.format.DateTimeFormatter;
 @AllArgsConstructor
 public class MessageService {
 
-    private final JavaMailSender mailSender;
+  private final JavaMailSender mailSender;
 
+  public void sendBookingSuccessEmail(BookingSuccessEvent event) {
 
-    public void sendBookingSuccessEmail(BookingSuccessEvent event) {
+    try {
+      MimeMessage message = mailSender.createMimeMessage();
+      MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
-        try {
-            MimeMessage message = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+      String to = event.getMemberEmail();
+      String subject = "訂票成功通知";
 
+      helper.setTo(to);
+      helper.setSubject(subject);
+      helper.setText(generateMailContent(event), true); // true = html 格式
 
-            String to = event.getMemberEmail();
-            String subject = "訂票成功通知";
+      mailSender.send(message);
 
-            helper.setTo(to);
-            helper.setSubject(subject);
-            helper.setText(generateMailContent(event), true); // true = html 格式
+    } catch (Exception e) {
+      throw new RuntimeException("Send mail fail", e);
+    }
+  }
 
-            mailSender.send(message);
-
-
-        }catch (Exception e) {
-           throw new RuntimeException("Send mail fail", e);
-        }
-
-
-
+  private String generateMailContent(BookingSuccessEvent event) {
+    StringBuilder seatHtml = new StringBuilder();
+    for (SeatInfo seat : event.getSeats()) {
+      seatHtml.append(String.format("<li>第 %s 排 %d 號</li>", seat.getRowLabel(), seat.getSeatNo()));
     }
 
-
-
-
-    private String generateMailContent(BookingSuccessEvent event) {
-        StringBuilder seatHtml = new StringBuilder();
-        for (SeatInfo seat : event.getSeats()) {
-            seatHtml.append(String.format("<li>第 %s 排 %d 號</li>", seat.getRowLabel(), seat.getSeatNo()));
-        }
-
-        return  String.format("""
+    return String.format(
+        """
                 <html>
                 <body>
                     <h3>親愛的會員 %s 您好：</h3>
@@ -68,29 +59,12 @@ public class MessageService {
                 </body>
                 </html>
                 """,
-                event.getMemberName(),
-                event.getCreateTime().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")),
-                event.getMovieName(),
-                event.getScreenName(),
-                event.getShowTime().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")),
-                seatHtml,
-                event.getTotalPrice()
-        );
-
-
-
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
+        event.getMemberName(),
+        event.getCreateTime().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")),
+        event.getMovieName(),
+        event.getScreenName(),
+        event.getShowTime().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")),
+        seatHtml,
+        event.getTotalPrice());
+  }
 }

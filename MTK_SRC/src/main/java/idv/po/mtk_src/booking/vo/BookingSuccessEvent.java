@@ -11,15 +11,13 @@ import java.util.UUID;
 @Data
 @Builder
 public class BookingSuccessEvent {
-    private UUID memberId;
-    private String memberName;
-    private String memberEmail;
-    private String movieName;
-    private String screenName;
-    private ZonedDateTime showTime;
-    private ZonedDateTime createTime;
-    private List<SeatInfo> seats;
-    private BigDecimal totalPrice;
-
-
+  private UUID memberId;
+  private String memberName;
+  private String memberEmail;
+  private String movieName;
+  private String screenName;
+  private ZonedDateTime showTime;
+  private ZonedDateTime createTime;
+  private List<SeatInfo> seats;
+  private BigDecimal totalPrice;
 }

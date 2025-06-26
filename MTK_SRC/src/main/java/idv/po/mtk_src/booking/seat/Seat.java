@@ -1,4 +1,5 @@
 package idv.po.mtk_src.booking.seat;
+
 import idv.po.mtk_src.movie.domain.model.Screen;
 import jakarta.persistence.*;
 import lombok.*;
@@ -6,9 +7,9 @@ import lombok.*;
 import java.util.UUID;
 
 @Entity
-@Table(name = "seats", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"screen_id", "row_label", "seat_no"})
-})
+@Table(
+    name = "seats",
+    uniqueConstraints = {@UniqueConstraint(columnNames = {"screen_id", "row_label", "seat_no"})})
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,32 +17,30 @@ import java.util.UUID;
 @Builder
 public class Seat {
 
-    @Id
-    @GeneratedValue
-    @Column(name = "seat_id", nullable = false, updatable = false)
-    private UUID seatId;
+  @Id
+  @GeneratedValue
+  @Column(name = "seat_id", nullable = false, updatable = false)
+  private UUID seatId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "screen_id", nullable = false,
-            foreignKey = @ForeignKey(name = "fk_screen_seats"))
-    private Screen screen;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(
+      name = "screen_id",
+      nullable = false,
+      foreignKey = @ForeignKey(name = "fk_screen_seats"))
+  private Screen screen;
 
-    @Column(name = "row_label", nullable = false, length = 5)
-    private String rowLabel;
+  @Column(name = "row_label", nullable = false, length = 5)
+  private String rowLabel;
 
-    @Column(name = "seat_no", nullable = false)
-    private Integer seatNo;
+  @Column(name = "seat_no", nullable = false)
+  private Integer seatNo;
 
-    @Column(name = "seat_type", length = 20)
-    private String seatType = "REGULAR";
+  @Column(name = "seat_type", length = 20)
+  private String seatType = "REGULAR";
 
-    @Column(name = "is_active")
-    private Boolean isActive = true;
+  @Column(name = "is_active")
+  private Boolean isActive = true;
 
-    @Column(name = "booking_status", length = 20)
-    private String bookingStatus;
-
-
-
-
+  @Column(name = "booking_status", length = 20)
+  private String bookingStatus;
 }

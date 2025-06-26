@@ -8,15 +8,16 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+
 @Repository
 @Transactional
 @RequiredArgsConstructor
 public class RoleRepositoryImpl implements RoleRepository {
 
-   private final RoleJpaRepository roleRepository;
+  private final RoleJpaRepository roleRepository;
 
-    @Override
-    public Optional<Role> findByRoleId(Integer roleId) {
-        return roleRepository.findByRoleId(roleId);
-    }
+  @Override
+  public Optional<Role> findByRoleId(Integer roleId) {
+    return roleRepository.findByRoleId(roleId);
+  }
 }

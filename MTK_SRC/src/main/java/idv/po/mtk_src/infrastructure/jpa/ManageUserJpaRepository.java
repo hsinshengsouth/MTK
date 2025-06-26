@@ -8,15 +8,13 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
-
 public interface ManageUserJpaRepository extends JpaRepository<User, Integer> {
 
-    Optional<User> findByUserEmail(String email);
+  Optional<User> findByUserEmail(String email);
 
-    Optional<User> findByUserName(String username);
-    @Modifying
-    @Query("UPDATE User u SET u.userStatus = :userStatus WHERE u.userId = :userId")
-    Integer updateStatus(@Param("userId") Integer   userId, @Param("userStatus") String userStatus);
+  Optional<User> findByUserName(String username);
 
-
+  @Modifying
+  @Query("UPDATE User u SET u.userStatus = :userStatus WHERE u.userId = :userId")
+  Integer updateStatus(@Param("userId") Integer userId, @Param("userStatus") String userStatus);
 }

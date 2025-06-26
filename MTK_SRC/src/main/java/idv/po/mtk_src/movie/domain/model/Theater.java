@@ -14,20 +14,17 @@ import java.util.UUID;
 @Builder
 public class Theater {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "theater_id", updatable = false, nullable = false)
-    private UUID theaterId;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @Column(name = "theater_id", updatable = false, nullable = false)
+  private UUID theaterId;
 
+  @Column(name = "theater_name", nullable = false, length = 255)
+  private String theaterName;
 
-    @Column(name = "theater_name", nullable = false, length = 255)
-    private String theaterName;
+  @Column(name = "theater_email")
+  private String theaterEmail;
 
-    @Column(name = "theater_email")
-    private String theaterEmail;
-
-    @Column(name = "address")
-    private String address;
-
-
+  @Column(name = "address")
+  private String address;
 }

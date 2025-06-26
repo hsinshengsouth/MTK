@@ -7,5 +7,5 @@ import java.util.UUID;
 
 @Data
 public class UuidDTO {
-    List<UUID> uuids;
+  List<UUID> uuids;
 }

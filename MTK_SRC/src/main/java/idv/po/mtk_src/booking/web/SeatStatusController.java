@@ -16,20 +16,11 @@ import java.util.UUID;
 @RequestMapping("/api/seats")
 public class SeatStatusController {
 
+  private final BookingService bookingService;
 
-    private final BookingService bookingService;
-
-    @GetMapping("/check")
-    public ResponseEntity<SeatStatusResponse> checkSeatStatus(@RequestParam UUID showtimeId,
-                                                              @RequestParam UUID screenId)
-    {
-       return ResponseEntity.ok(bookingService.checkSeatStatus(screenId,showtimeId));
-    }
-
-
-
-
-
-
-
+  @GetMapping("/check")
+  public ResponseEntity<SeatStatusResponse> checkSeatStatus(
+      @RequestParam UUID showtimeId, @RequestParam UUID screenId) {
+    return ResponseEntity.ok(bookingService.checkSeatStatus(screenId, showtimeId));
+  }
 }

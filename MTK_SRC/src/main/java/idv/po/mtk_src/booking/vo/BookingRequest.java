@@ -1,6 +1,5 @@
 package idv.po.mtk_src.booking.vo;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,13 +14,12 @@ import java.util.UUID;
 @NoArgsConstructor
 public class BookingRequest {
 
-    UUID movieId;
-    UUID memberId;
-    UUID ticketId;
-    UUID theaterId;
-    UUID screenId;
-    UUID showtimeId;
-    UUID seatId;
-    List<SeatRequest> seats;
-
+  UUID movieId;
+  UUID memberId;
+  UUID ticketId;
+  UUID theaterId;
+  UUID screenId;
+  UUID showtimeId;
+  UUID seatId;
+  List<SeatRequest> seats;
 }

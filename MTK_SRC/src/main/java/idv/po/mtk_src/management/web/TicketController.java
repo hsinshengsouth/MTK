@@ -14,18 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/tickets/command")
 public class TicketController {
 
-    private final TicketService ticketService;
+  private final TicketService ticketService;
 
-    @PostMapping("/addTicket")
-    public ResponseEntity<?> addTicket(
-            @RequestBody AddTicketCommand ticketCommand
-    ){
-        ticketService.addTicket(ticketCommand);
-        return ResponseEntity.status(HttpStatus.OK).body("Add a new ticket successfully");
-    }
-
-
-
-
-
+  @PostMapping("/addTicket")
+  public ResponseEntity<?> addTicket(@RequestBody AddTicketCommand ticketCommand) {
+    ticketService.addTicket(ticketCommand);
+    return ResponseEntity.status(HttpStatus.OK).body("Add a new ticket successfully");
+  }
 }

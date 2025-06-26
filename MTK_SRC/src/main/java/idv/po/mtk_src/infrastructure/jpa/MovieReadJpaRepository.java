@@ -5,5 +5,4 @@ import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
 
 import java.util.UUID;
 
-public interface MovieReadJpaRepository extends ElasticsearchRepository<MovieReadModel, UUID> {
-}
+public interface MovieReadJpaRepository extends ElasticsearchRepository<MovieReadModel, UUID> {}

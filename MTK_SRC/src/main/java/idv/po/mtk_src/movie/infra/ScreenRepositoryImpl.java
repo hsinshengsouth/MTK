@@ -13,13 +13,10 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ScreenRepositoryImpl implements ScreenRepository {
 
+  private final ScreenJpaRepository screenRepo;
 
-    private  final ScreenJpaRepository screenRepo;
-
-    @Override
-    public Optional<Screen> findByScreenId(UUID screenId) {
-        return screenRepo.findByScreenId(screenId);
-    }
-
-
+  @Override
+  public Optional<Screen> findByScreenId(UUID screenId) {
+    return screenRepo.findByScreenId(screenId);
+  }
 }

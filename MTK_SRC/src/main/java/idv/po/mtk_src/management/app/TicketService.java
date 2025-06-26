@@ -16,24 +16,21 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class TicketService {
 
-    private final TicketRepository ticketRepository;
-    private final MovieReadRepository movieReadRepository;
-    private final ScreenRepository screenRepository;
-    private final ShowtimeRepository showtimeRepository;
+  private final TicketRepository ticketRepository;
+  private final MovieReadRepository movieReadRepository;
+  private final ScreenRepository screenRepository;
+  private final ShowtimeRepository showtimeRepository;
 
-    public void addTicket(AddTicketCommand command) {
+  public void addTicket(AddTicketCommand command) {
 
-        if(movieReadRepository.findById(command.movieId()).isPresent() &&
-           screenRepository.findByScreenId(command.screenId()).isPresent()&&
-           showtimeRepository.findByShowTimeId(command.showTimeId()).isPresent()
-        ) {
-            Ticket ticket = new Ticket();
-            BeanUtils.copyProperties(command, ticket);
-            ticketRepository.addTicket(ticket);
-        }else{
-            throw new ResourceNotFoundException("movies、showtime and screens are not found");
-        }
-
+    if (movieReadRepository.findById(command.movieId()).isPresent()
+        && screenRepository.findByScreenId(command.screenId()).isPresent()
+        && showtimeRepository.findByShowTimeId(command.showTimeId()).isPresent()) {
+      Ticket ticket = new Ticket();
+      BeanUtils.copyProperties(command, ticket);
+      ticketRepository.addTicket(ticket);
+    } else {
+      throw new ResourceNotFoundException("movies、showtime and screens are not found");
     }
-
+  }
 }

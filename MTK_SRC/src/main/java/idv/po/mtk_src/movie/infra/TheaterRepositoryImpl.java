@@ -13,10 +13,10 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class TheaterRepositoryImpl implements TheaterRepository {
 
-    private final TheaterJpaRepository theaterJpaRepository;
+  private final TheaterJpaRepository theaterJpaRepository;
 
-    @Override
-    public Optional<Theater> findByTheaterId(UUID theaterId) {
-        return theaterJpaRepository.findByTheaterId(theaterId);
-    }
+  @Override
+  public Optional<Theater> findByTheaterId(UUID theaterId) {
+    return theaterJpaRepository.findByTheaterId(theaterId);
+  }
 }

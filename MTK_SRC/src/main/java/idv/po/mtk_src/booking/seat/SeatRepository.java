@@ -5,9 +5,7 @@ import java.util.UUID;
 
 public interface SeatRepository {
 
+  List<Seat> findSeatsByScreenAndShowtime(UUID screenId, UUID showtimeId);
 
-    List<Seat> findSeatsByScreenAndShowtime(UUID screenId, UUID showtimeId);
-
-    Long countSeatsByScreenAndShowtime(UUID screenId,UUID showtimeId);
-
+  Long countSeatsByScreenAndShowtime(UUID screenId, UUID showtimeId);
 }

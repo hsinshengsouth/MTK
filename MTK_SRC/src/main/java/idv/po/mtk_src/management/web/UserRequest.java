@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserRequest {
-    private String userName;
-    private String userEmail;
-    private String password;
+  private String userName;
+  private String userEmail;
+  private String password;
 }

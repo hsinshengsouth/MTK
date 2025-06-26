@@ -12,7 +12,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SeatRequest {
-    UUID seatId;
-    String rowLabel;
-    Integer seatNo;
+  UUID seatId;
+  String rowLabel;
+  Integer seatNo;
 }

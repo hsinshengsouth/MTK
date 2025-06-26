@@ -15,18 +15,15 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class SeatRepositoryImpl implements SeatRepository {
 
-    private final SeatJpaRepository seatJpaRepository;
+  private final SeatJpaRepository seatJpaRepository;
 
+  @Override
+  public List<Seat> findSeatsByScreenAndShowtime(UUID screenId, UUID showtimeId) {
+    return seatJpaRepository.findSeatsByScreenAndShowtime(screenId, showtimeId);
+  }
 
-    @Override
-    public List<Seat> findSeatsByScreenAndShowtime(UUID screenId, UUID showtimeId) {
-        return seatJpaRepository.findSeatsByScreenAndShowtime(screenId,showtimeId);
-    }
-
-    @Override
-    public Long countSeatsByScreenAndShowtime(UUID screenId, UUID showtimeId) {
-        return seatJpaRepository.countSeatsByScreenAndShowtime(screenId,showtimeId);
-    }
-
-
+  @Override
+  public Long countSeatsByScreenAndShowtime(UUID screenId, UUID showtimeId) {
+    return seatJpaRepository.countSeatsByScreenAndShowtime(screenId, showtimeId);
+  }
 }

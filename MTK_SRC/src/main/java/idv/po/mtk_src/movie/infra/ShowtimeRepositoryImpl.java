@@ -14,16 +14,15 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ShowtimeRepositoryImpl implements ShowtimeRepository {
 
-    private final ShowtimeJpaRepository showtimeJpaRepository;
+  private final ShowtimeJpaRepository showtimeJpaRepository;
 
+  @Override
+  public void saveAll(List<ShowTime> showTimes) {
+    showtimeJpaRepository.saveAll(showTimes);
+  }
 
-    @Override
-    public void saveAll(List<ShowTime> showTimes) {
-        showtimeJpaRepository.saveAll(showTimes);
-    }
-
-    @Override
-    public Optional<ShowTime> findByShowTimeId(UUID showtimeId) {
-        return showtimeJpaRepository.findByShowtimeId(showtimeId);
-    }
+  @Override
+  public Optional<ShowTime> findByShowTimeId(UUID showtimeId) {
+    return showtimeJpaRepository.findByShowtimeId(showtimeId);
+  }
 }

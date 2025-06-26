@@ -7,7 +7,5 @@ import java.util.UUID;
 
 public interface TheaterRepository {
 
-    Optional<Theater>findByTheaterId(UUID theaterId);
-
-
+  Optional<Theater> findByTheaterId(UUID theaterId);
 }

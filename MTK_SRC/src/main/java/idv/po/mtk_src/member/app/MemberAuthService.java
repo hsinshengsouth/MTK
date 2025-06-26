@@ -18,54 +18,37 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class MemberAuthService {
 
-    private final JwtUtils jwtUtils;
-    private final PasswordEncoder passwordEncoder;
-    private final AuthenticationManager authenticationManager;
-    private final MemberRepository memberRepository;
-    private final RedisService redisService;
+  private final JwtUtils jwtUtils;
+  private final PasswordEncoder passwordEncoder;
+  private final AuthenticationManager authenticationManager;
+  private final MemberRepository memberRepository;
+  private final RedisService redisService;
 
-    public AuthenticationResponse register(MemberRegister request) {
-        Member member = new Member();
+  public AuthenticationResponse register(MemberRegister request) {
+    Member member = new Member();
 
-        BeanUtils.copyProperties(request,member,"password");
+    BeanUtils.copyProperties(request, member, "password");
 
-        if(request.getPassword()!=null){
-            member.setPassword(passwordEncoder.encode(request.getPassword()));
-        }
-
-        var rtnMember=memberRepository.persistMember(member);
-        var jwtToken=jwtUtils.generateToken(rtnMember);
-
-        return AuthenticationResponse
-                .builder()
-                .accessToken(jwtToken)
-                .build();
+    if (request.getPassword() != null) {
+      member.setPassword(passwordEncoder.encode(request.getPassword()));
     }
 
+    var rtnMember = memberRepository.persistMember(member);
+    var jwtToken = jwtUtils.generateToken(rtnMember);
 
+    return AuthenticationResponse.builder().accessToken(jwtToken).build();
+  }
 
+  public AuthenticationResponse login(MemberRequest request) {
 
-    public AuthenticationResponse login(MemberRequest request) {
+    authenticationManager.authenticate(
+        new UsernamePasswordAuthenticationToken(request.getMemberEmail(), request.getPassword()));
 
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getMemberEmail(),
-                        request.getPassword()
-                )
-        );
+    var rtnMember =
+        memberRepository.findMemberByMemberEmail(request.getMemberEmail()).orElseThrow();
+    var jwtToken = jwtUtils.generateToken(rtnMember);
+    redisService.cacheToken(jwtToken, rtnMember.getMemberEmail(), jwtUtils.getExpirationMs());
 
-
-        var rtnMember=memberRepository.findMemberByMemberEmail(request.getMemberEmail()).orElseThrow();
-        var jwtToken=jwtUtils.generateToken(rtnMember);
-        redisService.cacheToken(jwtToken, rtnMember.getMemberEmail(), jwtUtils.getExpirationMs());
-
-
-
-        return AuthenticationResponse
-                .builder()
-                .accessToken(jwtToken)
-                .build();
-    }
-
-
+    return AuthenticationResponse.builder().accessToken(jwtToken).build();
+  }
 }

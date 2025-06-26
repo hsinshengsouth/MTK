@@ -13,23 +13,14 @@ import java.time.ZonedDateTime;
 @NoArgsConstructor
 public class MemberRegister {
 
-
-    private String memberName;
-    private String memberEmail;
-    private String memberPhone;
-    private String password;
-    private ZonedDateTime birthday;
-    private String gender;
-    private String marketingSource;
-    private String cardLast4;
-    private String cardType;
-    private String billingAdd;
-
-    
-
-
-
-
-
-
+  private String memberName;
+  private String memberEmail;
+  private String memberPhone;
+  private String password;
+  private ZonedDateTime birthday;
+  private String gender;
+  private String marketingSource;
+  private String cardLast4;
+  private String cardType;
+  private String billingAdd;
 }

@@ -13,8 +13,6 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class PaymentInfo {
 
-    String cardLastFour;
-    BigDecimal payAmount;
-
-
+  String cardLastFour;
+  BigDecimal payAmount;
 }

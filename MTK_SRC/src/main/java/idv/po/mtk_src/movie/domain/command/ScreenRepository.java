@@ -7,6 +7,5 @@ import java.util.UUID;
 
 public interface ScreenRepository {
 
-    Optional<Screen>findByScreenId(UUID screenId);
-
+  Optional<Screen> findByScreenId(UUID screenId);
 }

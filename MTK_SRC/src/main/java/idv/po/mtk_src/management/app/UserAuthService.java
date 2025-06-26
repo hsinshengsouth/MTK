@@ -23,75 +23,63 @@ import java.util.Set;
 @Service
 public class UserAuthService {
 
+  private final UserRepository manageUserRepository;
+  private final JwtUtils jwtUtils;
+  private final AuthenticationManager authenticationManager;
+  private final PasswordEncoder passwordEncoder;
+  private final RedisService redisService;
 
-    private final UserRepository manageUserRepository;
-    private final JwtUtils jwtUtils;
-    private final AuthenticationManager authenticationManager;
-    private final PasswordEncoder passwordEncoder;
-    private final RedisService redisService;
-    
-    private final RoleRepository roleRepository;
-    public UserAuthService(
-            UserRepository manageUserRepository,
-            JwtUtils jwtUtils,
-            AuthenticationManager authenticationManager,
-            PasswordEncoder passwordEncoder, RedisService redisService,
-            @Qualifier("roleJpaRepository") RoleRepository roleRepository) {
-        this.manageUserRepository = manageUserRepository;
-        this.jwtUtils=jwtUtils;
-        this.authenticationManager=authenticationManager;
-        this.passwordEncoder=passwordEncoder;
-        this.redisService = redisService;
-        this.roleRepository = roleRepository;
+  private final RoleRepository roleRepository;
+
+  public UserAuthService(
+      UserRepository manageUserRepository,
+      JwtUtils jwtUtils,
+      AuthenticationManager authenticationManager,
+      PasswordEncoder passwordEncoder,
+      RedisService redisService,
+      @Qualifier("roleJpaRepository") RoleRepository roleRepository) {
+    this.manageUserRepository = manageUserRepository;
+    this.jwtUtils = jwtUtils;
+    this.authenticationManager = authenticationManager;
+    this.passwordEncoder = passwordEncoder;
+    this.redisService = redisService;
+    this.roleRepository = roleRepository;
+  }
+
+  @Transactional
+  public AuthenticationResponse register(UserRegister request) {
+    User registerUser = new User();
+    BeanUtils.copyProperties(request, registerUser, "password");
+
+    if (request.getRoleId() != null) {
+      Role role =
+          roleRepository
+              .findByRoleId(request.getRoleId())
+              .orElseThrow(() -> new RuntimeException("Role not found"));
+      Set<Role> roles = new HashSet<>();
+      roles.add(role);
+      registerUser.setRoles(roles);
     }
 
-
-    @Transactional
-    public AuthenticationResponse register(UserRegister request) {
-        User registerUser = new User();
-        BeanUtils.copyProperties(request, registerUser, "password");
-
-        if (request.getRoleId() != null) {
-            Role role = roleRepository.findByRoleId(request.getRoleId() )
-                    .orElseThrow(() -> new RuntimeException("Role not found"));
-            Set<Role> roles = new HashSet<>();
-            roles.add(role);
-            registerUser.setRoles(roles);
-        }
-
-        if(request.getPassword()!=null){
-            registerUser.setPassword(passwordEncoder.encode(request.getPassword()));
-        }
-
-        var savedUser = manageUserRepository.persistUser(registerUser);
-        var jwtToken = jwtUtils.generateToken(savedUser);
-
-        return AuthenticationResponse
-                     .builder()
-                     .accessToken(jwtToken)
-                     .build();
+    if (request.getPassword() != null) {
+      registerUser.setPassword(passwordEncoder.encode(request.getPassword()));
     }
 
-    public AuthenticationResponse login(UserRequest request) {
+    var savedUser = manageUserRepository.persistUser(registerUser);
+    var jwtToken = jwtUtils.generateToken(savedUser);
 
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getUserEmail(),
-                        request.getPassword()
-                )
-        );
+    return AuthenticationResponse.builder().accessToken(jwtToken).build();
+  }
 
-        var manageUser = manageUserRepository.findByUserEmail(request.getUserEmail()).orElseThrow();
-        var jwtToken =  jwtUtils.generateToken(manageUser);
-        redisService.cacheToken(jwtToken, manageUser.getUserEmail(), jwtUtils.getExpirationMs());
+  public AuthenticationResponse login(UserRequest request) {
 
+    authenticationManager.authenticate(
+        new UsernamePasswordAuthenticationToken(request.getUserEmail(), request.getPassword()));
 
-        return AuthenticationResponse
-                    .builder()
-                    .accessToken(jwtToken)
-                    .build();
-    }
+    var manageUser = manageUserRepository.findByUserEmail(request.getUserEmail()).orElseThrow();
+    var jwtToken = jwtUtils.generateToken(manageUser);
+    redisService.cacheToken(jwtToken, manageUser.getUserEmail(), jwtUtils.getExpirationMs());
 
-
-
+    return AuthenticationResponse.builder().accessToken(jwtToken).build();
+  }
 }

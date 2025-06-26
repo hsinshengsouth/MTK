@@ -15,14 +15,9 @@ import lombok.NoArgsConstructor;
 @Table(name = "departments")
 public class Department {
 
-    @Id
-    @GeneratedValue
-    private Integer deptId;
+  @Id @GeneratedValue private Integer deptId;
 
-    private String deptName;
+  private String deptName;
 
-    private String description;
-
-
-
+  private String description;
 }

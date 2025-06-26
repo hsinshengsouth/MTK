@@ -15,15 +15,15 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class TicketRepositoryImpl implements TicketRepository {
 
-    private final TicketJpaRepository ticketJpaRepository;
+  private final TicketJpaRepository ticketJpaRepository;
 
-    @Override
-    public void addTicket(Ticket ticket) {
-        ticketJpaRepository.save(ticket);
-    }
+  @Override
+  public void addTicket(Ticket ticket) {
+    ticketJpaRepository.save(ticket);
+  }
 
-    @Override
-    public Optional<Ticket> getTicket(UUID ticketId) {
-        return ticketJpaRepository.findById(ticketId);
-    }
+  @Override
+  public Optional<Ticket> getTicket(UUID ticketId) {
+    return ticketJpaRepository.findById(ticketId);
+  }
 }

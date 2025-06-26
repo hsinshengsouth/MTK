@@ -4,6 +4,5 @@ import idv.po.mtk_src.movie.domain.model.Movie;
 
 public interface MovieCommandRepository {
 
-   void addMovie(Movie movie);
-
+  void addMovie(Movie movie);
 }

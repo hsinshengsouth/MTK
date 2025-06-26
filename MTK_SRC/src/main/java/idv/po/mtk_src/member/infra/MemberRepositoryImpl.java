@@ -15,20 +15,20 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class MemberRepositoryImpl implements MemberRepository {
 
-    private final MemberJpaRepository memberJpaRepository;
+  private final MemberJpaRepository memberJpaRepository;
 
-    @Override
-    public Member persistMember(Member member) {
-        return memberJpaRepository.save(member);
-    }
+  @Override
+  public Member persistMember(Member member) {
+    return memberJpaRepository.save(member);
+  }
 
-    @Override
-    public Optional<Member> findMemberById(UUID id) {
-        return memberJpaRepository.findById(id);
-    }
+  @Override
+  public Optional<Member> findMemberById(UUID id) {
+    return memberJpaRepository.findById(id);
+  }
 
-    @Override
-    public Optional<Member> findMemberByMemberEmail(String email) {
-        return memberJpaRepository.findByMemberEmail(email);
-    }
+  @Override
+  public Optional<Member> findMemberByMemberEmail(String email) {
+    return memberJpaRepository.findByMemberEmail(email);
+  }
 }

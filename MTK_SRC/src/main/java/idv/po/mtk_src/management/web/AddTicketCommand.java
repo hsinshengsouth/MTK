@@ -9,6 +9,4 @@ public record AddTicketCommand(
     UUID movieId,
     UUID showTimeId,
     Integer quantity,
-    BigDecimal price
-) {
-}
+    BigDecimal price) {}

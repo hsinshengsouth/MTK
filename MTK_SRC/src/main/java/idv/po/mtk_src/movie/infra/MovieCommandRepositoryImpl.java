@@ -10,11 +10,10 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class MovieCommandRepositoryImpl implements MovieCommandRepository {
 
-    private final MovieCommandJpaRepository movieJpaRepository;
+  private final MovieCommandJpaRepository movieJpaRepository;
 
-
-    @Override
-    public void addMovie(Movie movie) {
-        movieJpaRepository.save(movie);
-    }
+  @Override
+  public void addMovie(Movie movie) {
+    movieJpaRepository.save(movie);
+  }
 }

@@ -15,32 +15,22 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class TicketRepositoryImpl implements TicketDetailRepository {
 
-    private final TicketDetailJpaRepository ticketRepository;
+  private final TicketDetailJpaRepository ticketRepository;
 
-    @Override
-    public List<TicketDetail> persistTicketDetail(List<TicketDetail> ticketDetails) {
-        return ticketRepository.saveAll(ticketDetails);
-    }
+  @Override
+  public List<TicketDetail> persistTicketDetail(List<TicketDetail> ticketDetails) {
+    return ticketRepository.saveAll(ticketDetails);
+  }
 
-    @Override
-    public boolean existsByShowtimeIdAndRowLabelAndSeatNoAndBookingStatus(
-            UUID showtimeId,
-            String rowLabel,
-            Integer seatNo,
-            String booked
-    ) {
-        return ticketRepository.existsByShowtimeIdAndRowLabelAndSeatNoAndBookingStatus(
-                 showtimeId,
-                 rowLabel,
-                 seatNo,
-                 booked
-        );
-    }
+  @Override
+  public boolean existsByShowtimeIdAndRowLabelAndSeatNoAndBookingStatus(
+      UUID showtimeId, String rowLabel, Integer seatNo, String booked) {
+    return ticketRepository.existsByShowtimeIdAndRowLabelAndSeatNoAndBookingStatus(
+        showtimeId, rowLabel, seatNo, booked);
+  }
 
-    @Override
-    public List<TicketDetail> findAllDetail(List<UUID> ticketDetailIds) {
-        return ticketRepository.findAllById(ticketDetailIds);
-    }
-
-
+  @Override
+  public List<TicketDetail> findAllDetail(List<UUID> ticketDetailIds) {
+    return ticketRepository.findAllById(ticketDetailIds);
+  }
 }

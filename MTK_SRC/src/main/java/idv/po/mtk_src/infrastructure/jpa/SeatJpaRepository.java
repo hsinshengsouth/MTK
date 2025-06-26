@@ -10,8 +10,8 @@ import java.util.UUID;
 
 public interface SeatJpaRepository extends JpaRepository<Seat, UUID> {
 
-
-    @Query("""
+  @Query(
+      """
     SELECT s
     FROM Seat s
     WHERE s.screen.screenId = :screenId
@@ -24,11 +24,11 @@ public interface SeatJpaRepository extends JpaRepository<Seat, UUID> {
           AND td.bookingStatus = 'BOOKED'
       )
     """)
-    List<Seat> findSeatsByScreenAndShowtime(@Param("screenId") UUID screenId,
-                                            @Param("showtimeId") UUID showtimeId);
+  List<Seat> findSeatsByScreenAndShowtime(
+      @Param("screenId") UUID screenId, @Param("showtimeId") UUID showtimeId);
 
-
-    @Query("""
+  @Query(
+      """
     SELECT COUNT(s)
     FROM Seat s
     WHERE s.screen.screenId = :screenId
@@ -41,7 +41,6 @@ public interface SeatJpaRepository extends JpaRepository<Seat, UUID> {
           AND td.bookingStatus = 'BOOKED'
       )
     """)
-    Long countSeatsByScreenAndShowtime(@Param("screenId") UUID screenId,
-                                       @Param("showtimeId")UUID showtimeId);
-
+  Long countSeatsByScreenAndShowtime(
+      @Param("screenId") UUID screenId, @Param("showtimeId") UUID showtimeId);
 }

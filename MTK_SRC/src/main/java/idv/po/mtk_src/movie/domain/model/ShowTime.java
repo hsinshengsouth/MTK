@@ -17,39 +17,36 @@ import java.util.UUID;
 @Builder
 public class ShowTime {
 
-    @Id
-    @GeneratedValue
-    @Column(name = "showtime_id", nullable = false, updatable = false)
-    private UUID showtimeId;
+  @Id
+  @GeneratedValue
+  @Column(name = "showtime_id", nullable = false, updatable = false)
+  private UUID showtimeId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "movie_id", nullable = false)
-    private Movie movie;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "movie_id", nullable = false)
+  private Movie movie;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "theater_id", nullable = false)
-    private Theater theater;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "theater_id", nullable = false)
+  private Theater theater;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "screen_id", nullable = false)
-    private Screen screen;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "screen_id", nullable = false)
+  private Screen screen;
 
-    @Column(name = "date_time", nullable = false)
-    private ZonedDateTime dateTime;
+  @Column(name = "date_time", nullable = false)
+  private ZonedDateTime dateTime;
 
-    @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal price;
+  @Column(nullable = false, precision = 10, scale = 2)
+  private BigDecimal price;
 
-
-    public ShowtimeCreatedEvent createShowtimeCreatedEvent() {
-        return new ShowtimeCreatedEvent(
-                this.showtimeId,
-                this.movie.getMovieId(),
-                this.theater.getTheaterId(),
-                this.screen.getScreenId(),
-                this.dateTime,
-                this.price
-        );
-    }
-
+  public ShowtimeCreatedEvent createShowtimeCreatedEvent() {
+    return new ShowtimeCreatedEvent(
+        this.showtimeId,
+        this.movie.getMovieId(),
+        this.theater.getTheaterId(),
+        this.screen.getScreenId(),
+        this.dateTime,
+        this.price);
+  }
 }

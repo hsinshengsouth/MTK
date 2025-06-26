@@ -8,29 +8,25 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-    private final UserRepository userRepository;
+  private final UserRepository userRepository;
 
-    public UserService(
-            @Qualifier("manageUserRepositoryImpl") UserRepository manageUserRepository
-    ) {
-        this.userRepository = manageUserRepository;
-    }
-    public Optional<User> getUserByEmail(String email) {
-         return userRepository.findByUserEmail(email);
-    }
+  public UserService(@Qualifier("manageUserRepositoryImpl") UserRepository manageUserRepository) {
+    this.userRepository = manageUserRepository;
+  }
 
-    public Optional<User> getUserById(Integer userId) {
-        return userRepository.findByUserId(userId);
-    }
+  public Optional<User> getUserByEmail(String email) {
+    return userRepository.findByUserEmail(email);
+  }
 
-    public Optional<User> getUserByName(String  userName) {
-        return userRepository.findByUserName(userName);
-    }
+  public Optional<User> getUserById(Integer userId) {
+    return userRepository.findByUserId(userId);
+  }
 
-    public User saveManageUser(User user) {
-        return userRepository.persistUser(user);
-    }
+  public Optional<User> getUserByName(String userName) {
+    return userRepository.findByUserName(userName);
+  }
 
-
-
+  public User saveManageUser(User user) {
+    return userRepository.persistUser(user);
+  }
 }

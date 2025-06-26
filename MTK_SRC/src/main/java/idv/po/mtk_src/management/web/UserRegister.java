@@ -1,12 +1,9 @@
 package idv.po.mtk_src.management.web;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-
 
 @Data
 @Builder
@@ -14,11 +11,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserRegister {
 
-    private String userName;
-    private String userEmail;
-    private String password;
-    private String userStatus;
-    private Integer deptId;
-    private Integer  roleId;
-
+  private String userName;
+  private String userEmail;
+  private String password;
+  private String userStatus;
+  private Integer deptId;
+  private Integer roleId;
 }

@@ -14,15 +14,15 @@ import java.util.UUID;
 @Builder
 public class Screen {
 
-    @Id
-    @GeneratedValue
-    @Column(name = "screen_id", nullable = false, updatable = false)
-    private UUID screenId;
+  @Id
+  @GeneratedValue
+  @Column(name = "screen_id", nullable = false, updatable = false)
+  private UUID screenId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "theater_id", nullable = false)
-    private Theater theater;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "theater_id", nullable = false)
+  private Theater theater;
 
-    @Column(name = "screen_name", nullable = false, length = 100)
-    private String screenName;
+  @Column(name = "screen_name", nullable = false, length = 100)
+  private String screenName;
 }

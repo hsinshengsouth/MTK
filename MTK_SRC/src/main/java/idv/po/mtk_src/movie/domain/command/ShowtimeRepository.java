@@ -8,6 +8,7 @@ import java.util.UUID;
 
 public interface ShowtimeRepository {
 
-    void saveAll(List<ShowTime> showTimes);
-    Optional<ShowTime> findByShowTimeId(UUID showtimeId);
+  void saveAll(List<ShowTime> showTimes);
+
+  Optional<ShowTime> findByShowTimeId(UUID showtimeId);
 }

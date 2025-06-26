@@ -14,22 +14,16 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/booking/command")
 public class BookingController {
 
+  private final BookingService bookingService;
 
-    private final BookingService bookingService;
+  @PostMapping("/book")
+  public ResponseEntity<BookingResponse> bookingTicket(@RequestBody BookingRequest request) {
+    return ResponseEntity.ok(bookingService.bookingTicket(request));
+  }
 
-
-
-    @PostMapping("/book")
-    public ResponseEntity<BookingResponse> bookingTicket(@RequestBody BookingRequest request){
-        return ResponseEntity.ok(bookingService.bookingTicket(request));
-    }
-
-
-
-    @PostMapping("/pay")
-    public ResponseEntity<?> payment(@RequestBody UuidDTO detailUuids, @RequestBody PaymentInfo info){
-        return ResponseEntity.ok(bookingService.confirmPayment(detailUuids.getUuids(),info));
-    }
-
-
+  @PostMapping("/pay")
+  public ResponseEntity<?> payment(
+      @RequestBody UuidDTO detailUuids, @RequestBody PaymentInfo info) {
+    return ResponseEntity.ok(bookingService.confirmPayment(detailUuids.getUuids(), info));
+  }
 }
