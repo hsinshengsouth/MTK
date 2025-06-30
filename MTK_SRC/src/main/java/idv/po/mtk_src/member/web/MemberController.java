@@ -1,14 +1,11 @@
 package idv.po.mtk_src.member.web;
 
-import idv.po.mtk_src.management.domain.user.AuthenticationResponse;
 import idv.po.mtk_src.infrastructure.redis.RedisService;
+import idv.po.mtk_src.management.domain.user.AuthenticationResponse;
 import idv.po.mtk_src.member.app.MemberAuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth/member")
@@ -28,5 +25,14 @@ public class MemberController {
   public ResponseEntity<AuthenticationResponse> login(@RequestBody MemberRequest request) {
 
     return ResponseEntity.ok(authService.login(request));
+  }
+
+  @PostMapping("/logout")
+  public ResponseEntity<?> logout(@RequestHeader("Authorization") String authHeader) {
+    if (authHeader != null && authHeader.startsWith("Bearer ")) {
+      String token = authHeader.substring(7);
+      redisService.removeToken(token);
+    }
+    return ResponseEntity.ok("Logout successful");
   }
 }

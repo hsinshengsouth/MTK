@@ -60,7 +60,7 @@ public class RedisConfig {
   @Bean
   public RedissonClient redissonClient() {
     Config config = new Config();
-    config.useSingleServer().setAddress("redis://redis:6379");
+    config.useSingleServer().setAddress(String.format("redis://%s:%d", host, port));
     return Redisson.create(config);
   }
 }

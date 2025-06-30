@@ -1,13 +1,10 @@
 package idv.po.mtk_src.infrastructure.config;
 
 import idv.po.mtk_src.infrastructure.filter.JwtAuthenticationFilter;
-import idv.po.mtk_src.infrastructure.utils.JwtUtils;
 import idv.po.mtk_src.management.domain.user.CustomUserDetailsService;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -27,9 +24,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-  private final JwtUtils jwtUtils;
   private final JwtAuthenticationFilter jwtAuthenticationFilter;
-
   private final CustomUserDetailsService customUserDetailsService;
 
   @Bean
@@ -40,10 +35,10 @@ public class SecurityConfig {
 
   @Bean
   public AuthenticationProvider authenticationProvider() {
-    DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-    authProvider.setUserDetailsService(customUserDetailsService);
-    authProvider.setPasswordEncoder(passwordEncoder());
-    return authProvider;
+    DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+    provider.setUserDetailsService(customUserDetailsService); // for admin
+    provider.setPasswordEncoder(passwordEncoder());
+    return provider;
   }
 
   @Bean
@@ -54,14 +49,14 @@ public class SecurityConfig {
   @Bean
   @Order(1)
   public SecurityFilterChain adminSecurityFilterChain(HttpSecurity http) throws Exception {
-    return http.securityMatcher("/auth/admin/**", "movies/command")
+    return http.securityMatcher("/auth/admin/**", "movies/command/**", "/tickets/command/**")
         .csrf(AbstractHttpConfigurer::disable)
         .authorizeHttpRequests(
             auth ->
                 auth.requestMatchers(
                         "/auth/admin/register", "/auth/admin/login", "/auth/admin/logout")
                     .permitAll()
-                    .requestMatchers("/movies/command")
+                    .requestMatchers("/movies/command/**", "/tickets/command/**")
                     .hasAnyRole("ADMIN", "USER")
                     .anyRequest()
                     .authenticated())
@@ -72,7 +67,7 @@ public class SecurityConfig {
   }
 
   @Bean
-  @Order(1)
+  @Order(2)
   public SecurityFilterChain memberSecurityFilterChain(HttpSecurity http) throws Exception {
     return http.securityMatcher("/auth/member/**")
         .csrf(AbstractHttpConfigurer::disable)

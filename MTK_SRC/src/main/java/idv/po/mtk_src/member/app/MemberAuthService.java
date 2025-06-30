@@ -1,10 +1,10 @@
 package idv.po.mtk_src.member.app;
 
-import idv.po.mtk_src.management.domain.user.AuthenticationResponse;
 import idv.po.mtk_src.infrastructure.redis.RedisService;
 import idv.po.mtk_src.infrastructure.utils.JwtUtils;
-import idv.po.mtk_src.member.domain.member.Member;
-import idv.po.mtk_src.member.domain.member.MemberRepository;
+import idv.po.mtk_src.management.domain.user.AuthenticationResponse;
+import idv.po.mtk_src.member.domain.Member;
+import idv.po.mtk_src.member.domain.MemberRepository;
 import idv.po.mtk_src.member.web.MemberRegister;
 import idv.po.mtk_src.member.web.MemberRequest;
 import lombok.RequiredArgsConstructor;

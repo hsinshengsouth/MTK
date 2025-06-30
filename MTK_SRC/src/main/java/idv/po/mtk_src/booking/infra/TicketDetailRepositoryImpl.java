@@ -3,17 +3,16 @@ package idv.po.mtk_src.booking.infra;
 import idv.po.mtk_src.booking.ticketdetail.TicketDetail;
 import idv.po.mtk_src.booking.ticketdetail.TicketDetailRepository;
 import idv.po.mtk_src.infrastructure.jpa.TicketDetailJpaRepository;
+import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.UUID;
-
 @Repository
 @Transactional
 @RequiredArgsConstructor
-public class TicketRepositoryImpl implements TicketDetailRepository {
+public class TicketDetailRepositoryImpl implements TicketDetailRepository {
 
   private final TicketDetailJpaRepository ticketRepository;
 

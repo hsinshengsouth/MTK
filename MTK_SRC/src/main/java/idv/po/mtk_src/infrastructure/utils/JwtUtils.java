@@ -5,15 +5,16 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
-
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 
 @Component
 public class JwtUtils {
@@ -34,6 +35,13 @@ public class JwtUtils {
 
   public String generateToken(UserDetails userDetails) {
     Map<String, Object> claims = new HashMap<>();
+
+    claims.put(
+        "roles",
+        userDetails.getAuthorities().stream()
+            .map(auth -> auth.getAuthority())
+            .collect(Collectors.toList()));
+
     return Jwts.builder()
         .setClaims(claims)
         .setSubject(userDetails.getUsername())
@@ -50,6 +58,11 @@ public class JwtUtils {
   public boolean validateToken(String token, UserDetails userDetails) {
     final String username = getUserName(token);
     return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
+  }
+
+  public List<String> getRoles(String token) {
+    Claims claims = Jwts.parser().setSigningKey(getSignInKey()).parseClaimsJws(token).getBody();
+    return claims.get("roles", List.class);
   }
 
   private boolean isTokenExpired(String token) {

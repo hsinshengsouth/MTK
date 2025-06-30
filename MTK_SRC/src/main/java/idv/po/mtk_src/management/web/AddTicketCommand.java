@@ -7,6 +7,6 @@ public record AddTicketCommand(
     UUID theaterId,
     UUID screenId,
     UUID movieId,
-    UUID showTimeId,
-    Integer quantity,
+    UUID showtimeId,
+    Integer ticketQuantity,
     BigDecimal price) {}

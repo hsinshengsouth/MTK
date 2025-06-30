@@ -1,4 +1,4 @@
-package idv.po.mtk_src.member.domain.member;
+package idv.po.mtk_src.member.domain;
 
 import java.util.Optional;
 import java.util.UUID;

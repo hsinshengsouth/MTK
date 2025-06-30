@@ -1,6 +1,10 @@
-package idv.po.mtk_src.member.domain.member;
+package idv.po.mtk_src.member.domain;
 
 import jakarta.persistence.*;
+import java.time.ZonedDateTime;
+import java.util.Collection;
+import java.util.List;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,11 +12,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import java.time.ZonedDateTime;
-import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
 
 @Data
 @Builder
@@ -36,7 +35,7 @@ public class Member implements UserDetails {
   @Column(name = "member_phone", length = 100)
   private String memberPhone;
 
-  @Column(name = "password", nullable = false, length = 255)
+  @Column(name = "password", nullable = false)
   private String password;
 
   @Column(name = "member_status", length = 30)
@@ -52,7 +51,7 @@ public class Member implements UserDetails {
   @Column(name = "gender", length = 10)
   private String gender;
 
-  @Column(name = "address", length = 255)
+  @Column(name = "address")
   private String address;
 
   @Column(name = "register_time")
@@ -73,10 +72,10 @@ public class Member implements UserDetails {
   @Column(name = "card_type", length = 20)
   private String cardType;
 
-  @Column(name = "payment_token", length = 255)
+  @Column(name = "payment_token")
   private String paymentToken;
 
-  @Column(name = "billing_address", length = 255)
+  @Column(name = "billing_address")
   private String billingAddress;
 
   @Override

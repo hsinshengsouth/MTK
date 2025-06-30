@@ -69,11 +69,16 @@ services:
           elasticsearch-plugin install --batch https://release.infinilabs.com/analysis-ik/stable/elasticsearch-analysis-ik-7.17.27.zip  
         fi
         /usr/local/bin/docker-entrypoint.sh elasticsearch
+    networks:
+      - mtk_net
   kibana:
     image: docker.elastic.co/kibana/kibana:7.17.27
     container_name: kibana
     depends_on:
       - elasticsearch
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+
     ports:
       - "5601:5601"
     networks:
@@ -89,7 +94,7 @@ services:
     image: redislabs/redisinsight:latest
     container_name: redisinsight
     ports:
-      - "8001:8001"
+      - "5540:5540"
     depends_on:
       - redis
     networks:

@@ -1,25 +1,34 @@
 package idv.po.mtk_src.management.domain.user;
 
-import org.springframework.beans.factory.annotation.Qualifier;
+import idv.po.mtk_src.member.domain.Member;
+import idv.po.mtk_src.member.domain.MemberRepository;
+import java.util.Optional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
-  private final UserRepository repository;
-
-  public CustomUserDetailsService(
-      @Qualifier("manageUserRepositoryImpl") UserRepository manageUserRepository) {
-    this.repository = manageUserRepository;
-  }
+  private final UserRepository userrepository;
+  private final MemberRepository memberrepository;
 
   @Override
-  public UserDetails loadUserByUsername(String userEmail) throws UsernameNotFoundException {
-    return repository
-        .findByUserEmail(userEmail)
-        .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+  public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    // Try to find user
+    Optional<User> userOpt = userrepository.findByUserEmail(email);
+    if (userOpt.isPresent()) {
+      return userOpt.get();
+    }
+    // Try to find member
+    Optional<Member> memberOpt = memberrepository.findMemberByMemberEmail(email);
+    if (memberOpt.isPresent()) {
+      return memberOpt.get();
+    }
+
+    throw new UsernameNotFoundException("User and Member not found" + email);
   }
 }

@@ -1,14 +1,13 @@
 package idv.po.mtk_src.member.infra;
 
 import idv.po.mtk_src.infrastructure.jpa.MemberJpaRepository;
-import idv.po.mtk_src.member.domain.member.Member;
-import idv.po.mtk_src.member.domain.member.MemberRepository;
+import idv.po.mtk_src.member.domain.Member;
+import idv.po.mtk_src.member.domain.MemberRepository;
+import java.util.Optional;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
-import java.util.UUID;
 
 @Repository
 @Transactional

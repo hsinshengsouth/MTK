@@ -8,23 +8,22 @@ import idv.po.mtk_src.booking.vo.*;
 import idv.po.mtk_src.infrastructure.exception.ResourceNotFoundException;
 import idv.po.mtk_src.infrastructure.utils.KafkaEventPublisher;
 import idv.po.mtk_src.management.domain.ticket.TicketRepository;
-import idv.po.mtk_src.member.domain.member.Member;
-import idv.po.mtk_src.member.domain.member.MemberRepository;
+import idv.po.mtk_src.member.domain.Member;
+import idv.po.mtk_src.member.domain.MemberRepository;
 import idv.po.mtk_src.movie.domain.command.ShowtimeRepository;
 import idv.po.mtk_src.movie.domain.model.ShowTime;
-import lombok.AllArgsConstructor;
-import org.redisson.api.RLock;
-import org.redisson.api.RedissonClient;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
-
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import lombok.AllArgsConstructor;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 @Service
 @AllArgsConstructor
