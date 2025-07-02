@@ -67,8 +67,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
     jwtToken = authHeader.substring(7);
     userEmail = jwtUtils.getUserName(jwtToken);
-
-    if (!redisService.isValidToken(jwtToken)) {
+    boolean redisValid = redisService.isValidToken(jwtToken);
+    if (!redisValid) {
       filterChain.doFilter(request, response);
       return;
     }

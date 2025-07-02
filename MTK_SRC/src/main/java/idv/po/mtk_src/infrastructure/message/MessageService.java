@@ -1,14 +1,13 @@
 package idv.po.mtk_src.infrastructure.message;
 
-import idv.po.mtk_src.booking.vo.BookingSuccessEvent;
+import idv.po.mtk_src.booking.event.BookingSuccessEvent;
 import idv.po.mtk_src.booking.vo.SeatInfo;
 import jakarta.mail.internet.MimeMessage;
+import java.time.format.DateTimeFormatter;
 import lombok.AllArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-
-import java.time.format.DateTimeFormatter;
 
 @Service
 @AllArgsConstructor
@@ -22,7 +21,7 @@ public class MessageService {
       MimeMessage message = mailSender.createMimeMessage();
       MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
-      String to = event.getMemberEmail();
+      String to = event.memberEmail();
       String subject = "訂票成功通知";
 
       helper.setTo(to);
@@ -38,7 +37,7 @@ public class MessageService {
 
   private String generateMailContent(BookingSuccessEvent event) {
     StringBuilder seatHtml = new StringBuilder();
-    for (SeatInfo seat : event.getSeats()) {
+    for (SeatInfo seat : event.seats()) {
       seatHtml.append(String.format("<li>第 %s 排 %d 號</li>", seat.getRowLabel(), seat.getSeatNo()));
     }
 
@@ -59,12 +58,12 @@ public class MessageService {
                 </body>
                 </html>
                 """,
-        event.getMemberName(),
-        event.getCreateTime().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")),
-        event.getMovieName(),
-        event.getScreenName(),
-        event.getShowTime().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")),
+        event.memberName(),
+        event.createTime().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")),
+        event.movieName(),
+        event.screenName(),
+        event.showTime().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")),
         seatHtml,
-        event.getTotalPrice());
+        event.totalPrice());
   }
 }

@@ -1,8 +1,10 @@
 package idv.po.mtk_src.infrastructure.config;
 
-import idv.po.mtk_src.booking.vo.BookingSuccessEvent;
+import idv.po.mtk_src.booking.event.BookingSuccessEvent;
 import idv.po.mtk_src.movie.domain.event.MovieCreatedEvent;
 import idv.po.mtk_src.movie.domain.event.ShowtimeCreatedEvent;
+import java.util.HashMap;
+import java.util.Map;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -15,9 +17,6 @@ import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.*;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.kafka.support.serializer.JsonSerializer;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Configuration
 public class KafkaConfig {

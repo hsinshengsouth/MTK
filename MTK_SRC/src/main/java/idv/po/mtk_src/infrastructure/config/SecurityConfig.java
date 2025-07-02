@@ -69,7 +69,7 @@ public class SecurityConfig {
   @Bean
   @Order(2)
   public SecurityFilterChain memberSecurityFilterChain(HttpSecurity http) throws Exception {
-    return http.securityMatcher("/auth/member/**")
+    return http.securityMatcher("/auth/member/**", "/api/seats/check", "/booking/command/**")
         .csrf(AbstractHttpConfigurer::disable)
         .authorizeHttpRequests(
             auth ->

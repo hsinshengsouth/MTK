@@ -5,6 +5,11 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import idv.po.mtk_src.movie.domain.query.MovieReadModel;
 import idv.po.mtk_src.movie.domain.query.MovieReadRepository;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
@@ -16,17 +21,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-
 @Repository
 public class MovieReadEsRepository implements MovieReadRepository {
 
   private static final Logger logger = LoggerFactory.getLogger(MovieReadEsRepository.class);
-  private static final String index = "movie";
+  private static final String index = "movies";
 
   private final RestHighLevelClient client;
   private final SearchRequest searchRequest;

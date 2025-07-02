@@ -1,6 +1,6 @@
 package idv.po.mtk_src.infrastructure.listener;
 
-import idv.po.mtk_src.booking.vo.BookingSuccessEvent;
+import idv.po.mtk_src.booking.event.BookingSuccessEvent;
 import idv.po.mtk_src.infrastructure.message.MessageService;
 import idv.po.mtk_src.movie.domain.command.ScreenRepository;
 import idv.po.mtk_src.movie.domain.command.ShowtimeRepository;
@@ -12,15 +12,14 @@ import idv.po.mtk_src.movie.domain.model.ShowTime;
 import idv.po.mtk_src.movie.domain.model.Theater;
 import idv.po.mtk_src.movie.domain.query.MovieReadModel;
 import idv.po.mtk_src.movie.domain.query.MovieReadRepository;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor

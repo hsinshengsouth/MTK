@@ -1,5 +1,6 @@
 package idv.po.mtk_src.booking.app;
 
+import idv.po.mtk_src.booking.event.BookingSuccessEvent;
 import idv.po.mtk_src.booking.seat.Seat;
 import idv.po.mtk_src.booking.seat.SeatRepository;
 import idv.po.mtk_src.booking.ticketdetail.TicketDetail;
@@ -44,14 +45,14 @@ public class BookingService {
 
     List<Seat> availableSeats = seatRepository.findSeatsByScreenAndShowtime(screenId, showtimeId);
 
-    List<SeatStatusDto> seats =
-        availableSeats.stream()
-            .map(seat -> new SeatStatusDto(seat.getRowLabel(), seat.getSeatNo(), true))
-            .toList();
-
     Long seatCount = seatRepository.countSeatsByScreenAndShowtime(screenId, showtimeId);
 
-    return new SeatStatusResponse(showtimeId, seatCount, seats);
+    return new SeatStatusResponse(
+        showtimeId,
+        seatCount,
+        availableSeats.stream()
+            .map(seat -> new SeatStatusDto(seat.getRowLabel(), seat.getSeatNo(), true))
+            .toList());
   }
 
   @Transactional
@@ -80,7 +81,7 @@ public class BookingService {
                 request.getShowtimeId(), seat.getRowLabel(), seat.getSeatNo());
         RLock lock = redissonClient.getLock(lockKey);
 
-        if (lock.isHeldByCurrentThread()) {
+        if (lock.tryLock()) {
           locks.add(lock);
         } else {
           // 沒搶到任何一個座位就全部釋放，回傳失敗
@@ -107,6 +108,7 @@ public class BookingService {
                       TicketDetail.builder()
                           .ticketId(request.getTicketId())
                           .memberId(request.getMemberId())
+                          .showtimeId(request.getShowtimeId())
                           .rowLabel(seatReq.getRowLabel())
                           .seatNo(seatReq.getSeatNo())
                           .bookingStatus("PENDING")
@@ -131,7 +133,9 @@ public class BookingService {
         .seats(seatInfos)
         .status("PENDING")
         .ticketDetailId(
-            ticketDetails.stream().map(TicketDetail::getTicketId).collect(Collectors.toList()))
+            ticketDetails.stream()
+                .map(TicketDetail::getTicketDetailId)
+                .collect(Collectors.toList()))
         .screenName(show.getScreen().getScreenName())
         .movieName(show.getMovie().getChTitle())
         .showtimeId(show.getShowtimeId())
@@ -141,12 +145,13 @@ public class BookingService {
   }
 
   @Transactional
-  public String confirmPayment(List<UUID> ticketDetailId, PaymentInfo paymentInfo) {
+  public String confirmPayment(PaymentRequest paymentRequest) {
+
+    List<TicketDetail> details = ticketDetailRepository.findAllDetail(paymentRequest.getUuids());
 
     // 1. 呼叫模擬金流
-    boolean paid = paymentService.processPayment(paymentInfo, paymentInfo.getPayAmount());
+    boolean paid = paymentService.processPayment(paymentRequest, details);
 
-    List<TicketDetail> details = ticketDetailRepository.findAllDetail(ticketDetailId);
     List<RLock> locks = new ArrayList<>();
 
     try {
@@ -203,17 +208,16 @@ public class BookingService {
     int seatNum = seats.size();
 
     BookingSuccessEvent event =
-        BookingSuccessEvent.builder()
-            .memberId(ticket.getMemberId())
-            .memberName(member.getMemberName())
-            .memberEmail(member.getMemberEmail())
-            .movieName(show.getMovie().getChTitle())
-            .screenName(show.getScreen().getScreenName())
-            .showTime(show.getDateTime())
-            .createTime(ZonedDateTime.now())
-            .seats(seats)
-            .totalPrice(show.getPrice().multiply(BigDecimal.valueOf(seatNum)))
-            .build();
+        new BookingSuccessEvent(
+            ticket.getMemberId(),
+            member.getMemberName(),
+            member.getMemberEmail(),
+            show.getMovie().getChTitle(),
+            show.getScreen().getScreenName(),
+            show.getDateTime(),
+            ZonedDateTime.now(),
+            seats,
+            show.getPrice().multiply(BigDecimal.valueOf(seatNum)));
 
     String kafkaKey =
         String.format("%s:%s", ticket.getMemberId().toString(), ticket.getTicketId().toString());

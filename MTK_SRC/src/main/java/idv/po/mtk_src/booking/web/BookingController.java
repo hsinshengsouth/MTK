@@ -3,8 +3,7 @@ package idv.po.mtk_src.booking.web;
 import idv.po.mtk_src.booking.app.BookingService;
 import idv.po.mtk_src.booking.vo.BookingRequest;
 import idv.po.mtk_src.booking.vo.BookingResponse;
-import idv.po.mtk_src.booking.vo.PaymentInfo;
-import idv.po.mtk_src.booking.vo.UuidDTO;
+import idv.po.mtk_src.booking.vo.PaymentRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,8 +21,7 @@ public class BookingController {
   }
 
   @PostMapping("/pay")
-  public ResponseEntity<?> payment(
-      @RequestBody UuidDTO detailUuids, @RequestBody PaymentInfo info) {
-    return ResponseEntity.ok(bookingService.confirmPayment(detailUuids.getUuids(), info));
+  public ResponseEntity<?> payment(@RequestBody PaymentRequest req) {
+    return ResponseEntity.ok(bookingService.confirmPayment(req));
   }
 }
