@@ -1,9 +1,8 @@
 package idv.po.mtk_src.movie.domain.model;
 
 import jakarta.persistence.*;
-import lombok.*;
-
 import java.util.UUID;
+import lombok.*;
 
 @Entity
 @Table(name = "screens")
@@ -13,6 +12,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 public class Screen {
+
+  public Screen(String screenName) {}
 
   @Id
   @GeneratedValue

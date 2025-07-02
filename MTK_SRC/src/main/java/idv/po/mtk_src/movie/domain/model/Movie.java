@@ -4,13 +4,11 @@ import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import idv.po.mtk_src.movie.domain.command.AddMovieCommand;
 import idv.po.mtk_src.movie.domain.event.MovieCreatedEvent;
 import jakarta.persistence.*;
-import lombok.*;
-import org.hibernate.annotations.Type;
-
 import java.time.ZonedDateTime;
-
 import java.util.List;
 import java.util.UUID;
+import lombok.*;
+import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "movies")
@@ -46,6 +44,8 @@ public class Movie {
   @Type(JsonBinaryType.class)
   @Column(name = "genres", columnDefinition = "jsonb")
   private List<String> genres;
+
+  public Movie(String movieTitle) {}
 
   public static Movie createFromCommand(AddMovieCommand cmd) {
     return Movie.builder()
