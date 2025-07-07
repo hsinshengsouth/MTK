@@ -93,7 +93,6 @@ public class SecurityConfig {
     return http.build();
   }
 
-  // 4. 其它路徑，預設不允許
   @Bean
   @Order(4)
   public SecurityFilterChain defaultChain(HttpSecurity http) throws Exception {

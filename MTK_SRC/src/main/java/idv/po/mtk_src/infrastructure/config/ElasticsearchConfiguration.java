@@ -13,23 +13,17 @@ import org.springframework.data.elasticsearch.repository.config.EnableElasticsea
 @EnableElasticsearchRepositories(basePackages = "idv.po.mtk_src.infrastructure.jpa")
 public class ElasticsearchConfiguration extends AbstractElasticsearchConfiguration {
 
-  @Value("${spring.elasticsearch.uris}")
+  @Value("${mtk.elasticsearch.hostname}")
   private String elasticsearchUrl;
 
-  /* @Override
-      @Bean(name = "customElasticsearchClient")
-      public RestHighLevelClient elasticsearchClient() {
-          final ClientConfiguration clientConfiguration = ClientConfiguration.builder()
-                  .connectedTo(elasticsearchUrl)
-                  .withConnectTimeout(5000)    // 5 seconds
-                  .withSocketTimeout(30000)    // 30 seconds
-                  .build();
-          return RestClients.create(clientConfiguration).rest();
-      }    ;
-  */
+  @Value("${mtk.elasticsearch.port}")
+  private Integer port;
+
+  private static final String scheme = "http";
 
   @Bean(name = "customElasticsearchClient")
   public RestHighLevelClient elasticsearchClient() {
-    return new RestHighLevelClient(RestClient.builder(new HttpHost("127.0.0.1", 9200, "http")));
+    return new RestHighLevelClient(
+        RestClient.builder(new HttpHost(elasticsearchUrl, port, scheme)));
   }
 }

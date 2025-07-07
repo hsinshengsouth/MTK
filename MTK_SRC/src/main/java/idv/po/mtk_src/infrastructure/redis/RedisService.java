@@ -5,17 +5,15 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import idv.po.mtk_src.booking.seat.Seat;
 import idv.po.mtk_src.booking.seat.SeatRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Service;
-
 import java.time.Duration;
-
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -57,7 +55,7 @@ public class RedisService {
                 Collectors.toMap(
                     seat -> seat.getRowLabel() + "-" + seat.getSeatNo(), seat -> true));
 
-    // 寫入 Redis，設定過期時間
+ 
     ObjectMapper objectMapper = new ObjectMapper();
     String seatStatusJson = objectMapper.writeValueAsString(seatStatusMap);
     redisTemplate.opsForValue().set(redisKey, seatStatusJson, 30, TimeUnit.SECONDS);

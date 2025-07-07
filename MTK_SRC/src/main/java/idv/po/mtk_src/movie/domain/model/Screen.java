@@ -13,7 +13,7 @@ import lombok.*;
 @Builder
 public class Screen {
 
-  public Screen(String screenName) {}
+  public Screen(String ignoredScreenName) {}
 
   @Id
   @GeneratedValue

@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>idv.po</groupId>
-    <artifactId>MTK_SRC</artifactId>
+    <artifactId>mtk</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>MTK_SRC</name>
+    <name>mtk</name>
     <description>MTK_SRC</description>
     <url/>
     <licenses>
@@ -172,11 +172,12 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${project.parent.version}</version>
-                <configuration>
+                <!-- <configuration>
                     <classifier>execute</classifier>
-                </configuration>
+                </configuration>-->
             </plugin>
         </plugins>
+        <finalName>mtk</finalName>
     </build>
 
 </project>
