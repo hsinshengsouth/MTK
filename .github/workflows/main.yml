@@ -19,11 +19,11 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Run tests
-        run: mvn -B test --file pom.xml
+      - name: Build and Run Unit Tests
+        run: mvn clean verify
 
       - name: Build with Maven (skip tests)
-        run: mvn clean package -DskipTests
+        run: mvn package -DskipTests
 
       - name: Build Docker image
         run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/mtk:latest .
