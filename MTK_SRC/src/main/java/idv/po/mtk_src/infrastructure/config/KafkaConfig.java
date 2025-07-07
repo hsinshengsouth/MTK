@@ -29,7 +29,6 @@ public class KafkaConfig {
     return new KafkaTemplate<>(producerFactory());
   }
 
-  // --- Topic Config ---
   @Bean
   public NewTopic movieCreatedTopic(@Value("${kafka.topic.movie-created}") String topicName) {
     return new NewTopic(topicName, 1, (short) 1);

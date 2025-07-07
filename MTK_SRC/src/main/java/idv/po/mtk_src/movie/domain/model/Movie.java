@@ -45,7 +45,7 @@ public class Movie {
   @Column(name = "genres", columnDefinition = "jsonb")
   private List<String> genres;
 
-  public Movie(String movieTitle) {}
+  public Movie(String ignoredMovieTitle) {}
 
   public static Movie createFromCommand(AddMovieCommand cmd) {
     return Movie.builder()

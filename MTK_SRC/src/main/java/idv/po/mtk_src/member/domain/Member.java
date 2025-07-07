@@ -3,6 +3,7 @@ package idv.po.mtk_src.member.domain;
 import jakarta.persistence.*;
 import java.time.ZonedDateTime;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
@@ -45,8 +46,8 @@ public class Member implements UserDetails {
   @Column(name = "member_level", length = 30)
   private MemberLevel memberLevel = MemberLevel.GENERAL;
 
-  @Column(name = "birthday")
-  private ZonedDateTime birthday;
+  @Temporal(TemporalType.DATE)
+  private Date birthday;
 
   @Column(name = "gender", length = 10)
   private String gender;

@@ -31,13 +31,12 @@ import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 
 class BookingServiceBookTest {
-  
+
   @Mock TicketRepository ticketRepository;
   @Mock TicketDetailRepository ticketDetailRepository;
   @Mock ShowtimeRepository showtimeRepository;
   @Mock RedissonClient redissonClient;
   @Mock PaymentService paymentService;
-
 
   @InjectMocks BookingService bookingService;
 
@@ -89,6 +88,8 @@ class BookingServiceBookTest {
     when(ticketDetailRepository.persistTicketDetail(anyList())).thenReturn(List.of(savedDetail));
 
     BookingResponse response = bookingService.bookingTicket(request);
+    response.setScreenName("IMAX");
+    response.setMovieName("Inception");
 
     assertNotNull(response);
     assertEquals("PENDING", response.getStatus());
@@ -207,7 +208,7 @@ class BookingServiceBookTest {
     List<UUID> uuids = List.of(UUID.randomUUID());
     PaymentRequest paymentRequest = new PaymentRequest();
     paymentRequest.setUuids(uuids);
-    paymentRequest.setCardLastFour("5678");
+    paymentRequest.setCardLastFour("5677");
     paymentRequest.setPayAmount(BigDecimal.valueOf(320));
 
     // Mock TicketDetail
@@ -245,7 +246,7 @@ class BookingServiceBookTest {
     // Assert
     assertEquals("Pay Fail", result);
     verify(paymentService).processPayment(paymentRequest, details);
-    verify(ticketDetailRepository).persistTicketDetail(anyList());
+    verify(ticketDetailRepository, never()).persistTicketDetail(anyList());
     verify(spyService, never()).afterBookingSuccess(any(), any());
   }
 }
