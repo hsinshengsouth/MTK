@@ -21,13 +21,15 @@ jobs:
 
       - name: Build and Run Unit Tests
         run: mvn clean verify
-
+        working-directory: ./MTK_SRC
+        
       - name: Build with Maven (skip tests)
         run: mvn package -DskipTests
-
+        working-directory: ./MTK_SRC
+        
       - name: Build Docker image
         run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/mtk:latest .
-
+        working-directory: ./MTK_SRC
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
