@@ -1,8 +1,6 @@
 name: MTK Pipeline
 
 on:
-  push:
-    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
     types: [ opened, synchronize, reopened ] # PR 被建立、更新、重開
@@ -41,16 +39,16 @@ jobs:
         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/mtk:latest
 
 
-  deploy:
+ deploy:
     needs: build-test-and-push
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy to WSL via SSH
+      - name: Deploy to GCP VM via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.WSL_HOST }}
-          username: ${{ secrets.WSL_USERNAME }}
-          key: ${{ secrets.WSL_SSH_PRIVATE_KEY }}
+          host: ${{ secrets.GCP_VM_HOST }}              
+          username: ${{ secrets.GCP_VM_USERNAME }}      
+          key: ${{ secrets.GCP_VM_SSH_PRIVATE_KEY }}    
           port: 22
           script: |
             docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
