@@ -3,7 +3,7 @@ name: MTK Pipeline
 on:
   pull_request:
     branches: [ "main" ]
-    types: [ opened, synchronize, reopened ] # PR 被建立、更新、重開
+    types: [ opened, synchronize, reopened ]
 
 jobs:
   build-test-and-push:
@@ -46,9 +46,9 @@ jobs:
       - name: Deploy to GCP VM via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.GCP_VM_HOST }}              
-          username: ${{ secrets.GCP_VM_USERNAME }}      
-          key: ${{ secrets.GCP_VM_SSH_PRIVATE_KEY }}    
+          host: ${{ secrets.GCP_VM_HOST }}
+          username: ${{ secrets.GCP_VM_USERNAME }}
+          key: ${{ secrets.GCP_VM_SSH_PRIVATE_KEY }}
           port: 22
           script: |
             docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
