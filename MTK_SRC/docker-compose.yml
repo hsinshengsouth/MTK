@@ -38,7 +38,7 @@ services:
       - /bin/bash
       - -c
       - |
-        if [ ! -d plugins/ik ]; then
+        if [ ! -d plugins/analysis-ik ]; then
           elasticsearch-plugin install --batch https://release.infinilabs.com/analysis-ik/stable/elasticsearch-analysis-ik-7.17.27.zip  
         fi
         /usr/local/bin/docker-entrypoint.sh elasticsearch
