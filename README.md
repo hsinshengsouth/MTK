@@ -20,9 +20,11 @@
  ├── MTK_SA          # 系統分析與設計文件
  ├── MTK_SRC         # 主要程式碼與 Docker 設定
  │   ├── src/main/java/idv/po/mtk_src
- │   │   ├── movie      # 電影相關模組 (domain/app/infra/web)
- │   │   └── booking    # 訂票相關模組
- │   │   └── booking    # 管理相關模組
+ │   │   ├── movie            # 電影相關模組 (domain/app/infra/web)
+ │   │   └── booking          # 訂票相關模組
+ │   │   └── management       # 後台管理相關模組
+ │   │   └── infrastructure   # 中間件與DB依賴模組
+ │   │   └── member           # 前台會員模組
  │   ├── docker-compose.yml
  │   └── pom.xml
  └── README.md
