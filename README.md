@@ -2,7 +2,18 @@
  MTK 是一個電影查詢與訂票系統，採用 DDD (Domain-Driven Design)
  並使用OOAD分析設計類別圖，採用流程圖和use case，輔助設計流程
 
-  ## 目錄結構
+## 主要框架
+
+- **Spring Boot**：核心應用框架。
+- **Spring Security**：處理使用者驗證與授權。
+- **Redis**：作為快取層，加速常用資料的存取。
+- **Kafka**：用於事件傳遞與系統間的非同步溝通。
+- **PostgreSQL / Elasticsearch**：採讀寫分離設計，寫入資料保存於 PostgreSQL，搜尋與查詢透過 Elasticsearch。
+- **DDD 架構**：程式碼依照 `domain`、`app`、`infra`、`web` 等分層實作。
+- **Docker Compose**：快速建置所需服務 (資料庫、Kafka、Redis、Elasticsearch 等)。
+- **GitHub Action**：完成自動化CICD，部署至GCP雲端 VM
+
+## 目錄結構
  ```
 
  MTK
@@ -17,7 +28,7 @@
  └── README.md
  ```
  
- ## 執行方式
+## 執行方式
  
  1. 進入 `MTK_SRC` 目錄後打包專案：
     ```bash
