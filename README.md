@@ -4,10 +4,10 @@
 
 ## 主要框架
 
-- **Spring Boot**：核心應用框架。
+- **Spring Boot**：API介面，核心應用框架。
 - **Spring Security**：處理使用者驗證與授權。
-- **Redis**：作為快取層，加速常用資料的存取。
-- **Kafka**：用於事件傳遞與系統間的非同步溝通。
+- **Redis**：作為快取層，加速登入資料的存取與訂票時RedisLock，例如:登入後的快取、訂票後RedisLock 座位。
+- **Kafka**：用於事件傳遞的非同步溝通，例如:讀寫資料、訂票後寄eamil。
 - **PostgreSQL / Elasticsearch**：採讀寫分離設計，寫入資料保存於 PostgreSQL，搜尋與查詢透過 Elasticsearch。
 - **DDD 架構**：程式碼依照 `domain`、`app`、`infra`、`web` 等分層實作。
 - **Docker Compose**：快速建置所需服務 (資料庫、Kafka、Redis、Elasticsearch 等)。
