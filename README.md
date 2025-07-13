@@ -1,6 +1,6 @@
 # MTK
  MTK 是一個電影查詢與訂票系統，採用 DDD (Domain-Driven Design)
- 並使用OOAD分析設計類別圖，採用流程圖和use case，輔助設計流程
+ 並使用OOAD分析設計類別圖，並使用流程圖和使用者情境，輔助分析使用流程
 
 ## 主要框架
 
